@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sihirli Hediye</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Great+Vibes&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <title>Benim Hediyem</title> <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Great+Vibes&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     
     <style>
         /* --- GENEL AYARLAR --- */
@@ -44,6 +43,7 @@
         }
         #creatorPanel::-webkit-scrollbar { width: 0; }
 
+        /* Ana Başlık Değişti */
         h1 { font-family: 'Great Vibes', cursive; color: #d81b60; margin: 0 0 10px 0; font-size: 36px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5); }
         
         input, select, textarea {
@@ -56,6 +56,7 @@
         input:focus, select:focus, textarea:focus { border-color: #d81b60; box-shadow: 0 0 5px rgba(216, 27, 96, 0.1); }
         
         option { font-size: 13px; }
+        optgroup { color: #ad1457; font-weight: bold; margin-top: 10px; }
 
         /* YAPAY ZEKA ALANI */
         .ai-assistant {
@@ -112,7 +113,6 @@
             width: 280px; height: 220px; z-index: 10; pointer-events: none;
         }
         
-        /* Çiçek/Hediye Öğesi */
         .gift-item {
             position: absolute;
             font-size: 50px; line-height: 0.7;
@@ -121,7 +121,6 @@
             animation: bloom 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Sallanma Efekti (İçerik) */
         .swaying-emoji {
             display: inline-block;
             animation: romanticSway 3s ease-in-out infinite alternate;
@@ -144,10 +143,11 @@
             border-radius: 50%; box-shadow: 0 5px 10px rgba(0,0,0,0.1);
         }
         
-        /* ETKİLEŞİMLİ MÜHÜR (DÜZELTİLDİ) */
+        /* ETKİLEŞİMLİ MÜHÜR (Tam Hizalandı) */
         .bouquet-seal {
-            position: absolute; bottom: 200px; left: 50%; 
-            /* Sadece translate kullanıyoruz, hover'da scale ekleyeceğiz */
+            position: absolute; 
+            bottom: 215px; /* Alttaki süse tam oturması için ayarlandı */
+            left: 50%; 
             transform: translateX(-50%);
             width: 50px; height: 50px; background: #f06292;
             border-radius: 50%; box-shadow: 0 5px 10px rgba(0,0,0,0.2);
@@ -156,7 +156,6 @@
             display: flex; align-items: center; justify-content: center;
             font-size: 20px; color: white;
         }
-        /* Hover olunca kaymayı engellemek için translateX'i tekrar ediyoruz */
         .bouquet-seal:hover { 
             transform: translateX(-50%) scale(1.2); 
             background: #ec407a; 
@@ -164,7 +163,7 @@
 
         /* ANLAM BALONCUĞU */
         .meaning-tooltip {
-            position: absolute; bottom: 260px; left: 50%; transform: translateX(-50%) translateY(10px);
+            position: absolute; bottom: 275px; left: 50%; transform: translateX(-50%) translateY(10px);
             background: rgba(255, 255, 255, 0.95);
             padding: 10px 20px; border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
@@ -183,7 +182,7 @@
         /* --- ZARF (Konumu Sabit) --- */
         .envelope-container {
             position: fixed; 
-            bottom: 110px; /* Butonların üzerinde */
+            bottom: 110px; 
             right: 20px;
             width: 140px; height: 90px; cursor: pointer; z-index: 1000;
             transition: transform 0.3s;
@@ -228,10 +227,11 @@
         #linkBtnArea, #createBtnArea { position: fixed; bottom: 20px; z-index: 900; display: none; }
         #linkBtnArea { right: 20px; } #createBtnArea { left: 20px; }
         .corner-btn {
-            background: white; color: #d81b60; padding: 10px 20px; border-radius: 20px;
-            border: none; font-weight: bold; font-size: 13px; box-shadow: 0 5px 10px rgba(0,0,0,0.1); cursor: pointer;
+            background: white; color: #d81b60; padding: 12px 24px; border-radius: 30px;
+            border: none; font-weight: bold; font-size: 14px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer;
             transition: transform 0.2s;
         }
+        .corner-btn:hover { transform: translateY(-3px); }
 
         @keyframes gentleFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
         @keyframes bloom { from { transform: scale(0); } to { transform: scale(1); } }
@@ -249,31 +249,30 @@
     <div id="headerTitle"></div>
 
     <div id="creatorPanel">
-        <h1>✨ Sihirli Hediye ✨</h1>
-        <input type="text" id="senderName" placeholder="Gönderen Adı">
+        <h1>✨ Benim Hediyem ✨</h1> <input type="text" id="senderName" placeholder="Gönderen Adı">
         <input type="text" id="receiverName" placeholder="Alıcı Adı">
         
         <select id="giftSelect">
             <option value="">Ne Hissettirmek İstersin?</option>
             
             <optgroup label="❤️ Duygular & Çiçekler">
-                <option value="gul">Gül - Seni Çok Seviyorum</option>
-                <option value="lale">Lale - Çok Asil ve Zarifsin</option>
-                <option value="papatya">Papatya - İçten ve Samimisin</option>
-                <option value="aycicegi">Ayçiçeği - Sen Benim Güneşimsin</option>
-                <option value="nilufer">Nilüfer - Huzur Bulmanı İstiyorum</option>
-                <option value="orkide">Orkide - Kimseye Benzemiyorsun</option>
-                <option value="hibiskus">Hibiskus - Zarafetin Büyülüyor</option>
-                <option value="kir">Kır Çiçeği - Doğallığını Seviyorum</option>
+                <option value="gul">Gül - Seni Çok Seviyorum 🌹</option>
+                <option value="lale">Lale - Çok Asil ve Zarifsin 🌷</option>
+                <option value="papatya">Papatya - İçten ve Samimisin 🌼</option>
+                <option value="aycicegi">Ayçiçeği - Sen Benim Güneşimsin 🌻</option>
+                <option value="nilufer">Nilüfer - Huzur Bulmanı İstiyorum 💮</option>
+                <option value="orkide">Orkide - Kimseye Benzemiyorsun 💐</option>
+                <option value="hibiskus">Hibiskus - Zarafetin Büyülüyor 🌺</option>
+                <option value="kir">Kır Çiçeği - Doğallığını Seviyorum 🌾</option>
             </optgroup>
 
             <optgroup label="🍫 Tatlılar & İçecekler">
-                <option value="cikolata">Çikolata - Mutluluk Getirdim</option>
-                <option value="seker">Şekerleme - Çocuksu Sevinçler</option>
-                <option value="lolipop">Lolipop - Gülümsemen İçin</option>
-                <option value="kahve">Kahve - Sıcak Bir Sohbeti Özledim</option>
-                <option value="cay">Çay - İçin Isınsın Diye</option>
-                <option value="pasta">Pasta - Bugün Senin Günün</option>
+                <option value="cikolata">Çikolata - Mutluluk Getirdim 🍫</option>
+                <option value="seker">Şekerleme - Çocuksu Sevinçler 🍬</option>
+                <option value="lolipop">Lolipop - Gülümsemen İçin 🍭</option>
+                <option value="kahve">Kahve - Sıcak Bir Sohbeti Özledim ☕</option>
+                <option value="cay">Çay - İçin Isınsın Diye 🍵</option>
+                <option value="pasta">Pasta - Bugün Senin Günün 🍰</option>
             </optgroup>
         </select>
         
