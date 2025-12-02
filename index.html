@@ -3,359 +3,285 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sana Özel Çiçekler</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Great+Vibes&family=Lato:wght@300;400&display=swap" rel="stylesheet">
-
+    <title>Dijital Buketim</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        /* --- ESTETİK GENEL AYARLAR --- */
+        /* --- GENEL AYARLAR --- */
         body {
-            font-family: 'Lato', sans-serif;
-            /* Toz Pembe Arka Plan */
-            background: radial-gradient(circle at center, #fce4ec 0%, #f8bbd0 100%);
-            margin: 0; padding: 0; min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f0eb; /* Krem rengi minimalist zemin */
+            margin: 0; padding: 0; height: 100vh;
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
-            overflow: hidden; 
-            color: #880e4f;
+            overflow: hidden;
+            color: #333;
         }
 
-        /* --- ARKA PLAN SÜSLERİ (EMOJİ) --- */
-        .bg-emoji {
-            position: absolute;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.4; /* Hafif silik dursunlar */
-            filter: blur(1px);
-            user-select: none;
-        }
-
-        /* Uçan Kelebek Animasyonu */
-        @keyframes floatButterfly {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(100px, -50px) rotate(15deg); }
-            50% { transform: translate(0, -100px) rotate(-10deg); }
-            75% { transform: translate(-100px, -50px) rotate(15deg); }
-            100% { transform: translate(0, 0) rotate(0deg); }
-        }
-
-        /* Süzülen Çiçek Animasyonu */
-        @keyframes floatFlower {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            50% { opacity: 0.6; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-        }
-
-        /* --- KONTROL PANELİ --- */
+        /* --- KONTROL PANELİ (Minimalist) --- */
         #creatorPanel {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(15px);
-            padding: 30px; border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(136, 14, 79, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            width: 90%; max-width: 350px;
-            text-align: center; z-index: 1000;
-            transition: opacity 0.5s ease;
+            background: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            width: 90%; max-width: 360px;
+            text-align: center;
+            z-index: 1000;
         }
-        h2 { font-family: 'Playfair Display', serif; color: #880e4f; margin-bottom: 5px; }
-        
-        select, textarea {
-            width: 100%; padding: 12px; margin: 10px 0;
-            border-radius: 12px; border: 1px solid #f48fb1;
-            background: rgba(255, 255, 255, 0.8);
-            font-family: 'Lato', sans-serif; outline: none; color: #880e4f;
+
+        h1 { font-family: 'Playfair Display', serif; margin: 0 0 5px 0; color: #2c3e50; }
+        p { font-size: 13px; color: #7f8c8d; margin-bottom: 20px; }
+
+        .control-group { margin-bottom: 15px; text-align: left; }
+        label { font-size: 12px; font-weight: bold; color: #95a5a6; display: block; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+
+        select, input, textarea {
+            width: 100%; padding: 12px; border-radius: 8px;
+            border: 1px solid #eee; background: #f9f9f9;
+            font-family: inherit; outline: none; box-sizing: border-box;
+            transition: 0.3s;
         }
-        button {
-            width: 100%; padding: 12px; margin-top: 15px;
-            background: linear-gradient(135deg, #f48fb1 0%, #f06292 100%);
-            color: white; border: none; border-radius: 12px;
-            font-weight: bold; cursor: pointer;
-            box-shadow: 0 5px 15px rgba(240, 98, 146, 0.4);
+        select:focus, textarea:focus { border-color: #333; background: #fff; }
+
+        /* Renk Seçimi (Yuvarlak Butonlar) */
+        .color-options { display: flex; gap: 10px; justify-content: center; margin-top: 5px; }
+        .color-btn {
+            width: 30px; height: 30px; border-radius: 50%; border: 2px solid transparent; cursor: pointer;
             transition: transform 0.2s;
         }
-        button:hover { transform: translateY(-2px); }
+        .color-btn.selected { border-color: #333; transform: scale(1.1); }
 
-        /* --- SAHNE --- */
+        button.main-btn {
+            background: #2c3e50; color: white; width: 100%; padding: 15px;
+            border: none; border-radius: 10px; font-weight: 600; cursor: pointer;
+            margin-top: 10px; transition: 0.2s;
+        }
+        button.main-btn:hover { background: #34495e; transform: translateY(-2px); }
+
+        /* --- SAHNE VE BUKET KAĞIDI --- */
         #sceneContainer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            display: none; flex-direction: column; align-items: center; justify-content: flex-end;
-            padding-bottom: 50px; z-index: 500;
+            display: none; align-items: center; justify-content: center;
+            flex-direction: column;
+            z-index: 500;
         }
 
-        /* --- BUKET ALANI --- */
-        .bouquet-wrapper {
-            position: relative; width: 300px; height: 450px;
-            margin-bottom: 30px;
-            animation: gentleHover 3s ease-in-out infinite;
+        .bouquet-container {
+            position: relative;
+            width: 300px; height: 450px;
+            display: flex; justify-content: center; align-items: flex-end;
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15));
+            animation: floatUp 1s ease-out;
         }
 
-        /* VAZO (CSS ile Çizim - Resim Yok) */
-        .vase {
-            position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-            width: 140px; height: 190px;
-            /* Cam Görünümü */
-            background: linear-gradient(135deg, rgba(255,255,255,0.6), rgba(255,255,255,0.2));
-            backdrop-filter: blur(4px);
-            border-radius: 0 0 60px 60px;
-            border: 2px solid rgba(255,255,255,0.8);
-            box-shadow: 0 10px 30px rgba(136, 14, 79, 0.1);
-            z-index: 20;
-        }
-        
-        /* ÇİÇEKLER (EMOJİ) */
-        .flower-emoji {
-            position: absolute; left: 50%; transform-origin: bottom center;
-            font-size: 70px; /* Emojileri büyüt */
-            line-height: 1;
-            user-select: none;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
-            transition: all 0.5s ease;
+        /* BUKET KAĞIDI (CSS ile Çizim) */
+        .wrapper-back {
+            position: absolute; bottom: 0;
+            width: 200px; height: 300px;
+            background-color: #d7ccc8; /* Varsayılan Kraft Kağıdı */
+            clip-path: polygon(20% 100%, 80% 100%, 100% 0, 0 0);
+            z-index: 5;
         }
 
-        /* SAPLAR */
-        .stem {
-            position: absolute; bottom: 20px; left: 50%; width: 4px; height: 150px;
-            background-color: #81c784; border-radius: 2px;
-            transform-origin: bottom center; z-index: 15;
+        .wrapper-front {
+            position: absolute; bottom: -10px;
+            width: 210px; height: 180px;
+            background-color: #a1887f; /* Biraz daha koyu ton */
+            clip-path: polygon(25% 100%, 75% 100%, 100% 0, 0 0);
+            z-index: 20; /* Çiçeklerin önünde */
         }
 
-        /* --- ZARF --- */
-        .envelope-container {
-            position: relative; width: 260px; height: 160px; cursor: pointer;
-            z-index: 100;
+        /* ÇİÇEKLER */
+        .flowers-layer {
+            position: absolute; bottom: 150px; /* Kağıdın içinden çıksın */
+            width: 250px; height: 250px;
+            z-index: 10; /* Kağıtların arasında */
+            display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-end;
         }
-        .envelope {
-            position: relative; width: 100%; height: 100%;
-            background: #f06292; border-radius: 8px;
-            box-shadow: 0 10px 25px rgba(136, 14, 79, 0.2);
+
+        .flower {
+            font-size: 65px; line-height: 0.8;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: bottom center;
+            position: absolute;
         }
-        .flap {
-            position: absolute; top: 0; left: 0; width: 0; height: 0;
-            border-left: 130px solid transparent; border-right: 130px solid transparent;
-            border-top: 100px solid #e91e63; /* Kapak rengi */
-            transform-origin: top; transition: 0.6s ease; z-index: 5;
+
+        /* KURDELE (Ribbon) */
+        .ribbon {
+            position: absolute; bottom: 80px; z-index: 25;
+            width: 60px; height: 60px;
+            background: #e91e63; border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-        .envelope-container.open .flap { transform: rotateX(180deg); z-index: 1; }
-
-        .letter {
-            position: absolute; bottom: 10px; left: 10px; width: 240px; height: 140px;
-            background: #fff; padding: 20px; box-sizing: border-box; border-radius: 4px;
-            font-family: 'Great Vibes', cursive; font-size: 26px; color: #c2185b;
-            text-align: center; display: flex; align-items: center; justify-content: center;
-            transition: transform 0.6s ease 0.2s; z-index: 2;
-            box-shadow: 0 -5px 10px rgba(0,0,0,0.05);
+        .ribbon::before, .ribbon::after { /* Kurdele uçları */
+            content: ''; position: absolute; top: 30px;
+            width: 20px; height: 80px; background: inherit;
+            z-index: -1;
         }
-        .envelope-container.open .letter { transform: translateY(-120px); }
+        .ribbon::before { left: 10px; transform: rotate(20deg); }
+        .ribbon::after { right: 10px; transform: rotate(-20deg); }
 
-        .hint { position: absolute; bottom: 15px; width: 100%; text-align: center; font-size: 13px; color: #fff; animation: pulse 2s infinite; }
+        /* NOT KARTI (Üstte Süzülen) */
+        .note-tag {
+            position: absolute; top: -80px; right: 0;
+            background: white; padding: 15px 20px;
+            border-radius: 2px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            font-family: 'Playfair Display', serif; font-size: 14px; color: #444;
+            max-width: 150px; text-align: center;
+            transform: rotate(5deg);
+            z-index: 30;
+            border-top: 3px solid #e91e63; /* Kurdele rengiyle uyumlu */
+            display: none;
+        }
 
-        /* --- PAYLAŞ BUTONU --- */
-        #shareArea { position: fixed; bottom: 20px; z-index: 1000; display: none; width: 90%; max-width: 300px; }
-        .share-btn { background: #fff; color: #c2185b; }
+        /* ALT PANEL (Link Butonu) */
+        .bottom-actions {
+            position: fixed; bottom: 30px; width: 100%; text-align: center;
+            display: none; z-index: 1000;
+        }
+        .share-btn {
+            background: #fff; color: #333; padding: 12px 30px;
+            border-radius: 30px; text-decoration: none; font-weight: bold;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1); border: 1px solid #eee;
+            cursor: pointer; display: inline-block;
+        }
 
-        @keyframes gentleHover { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
-        @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.6;} }
+        @keyframes floatUp { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div id="backgroundArea"></div>
-
     <div id="creatorPanel">
-        <h2>🌸 Sevgi Bahçesi</h2>
-        <p style="font-size:14px; color:#ad1457;">Toz pembe hayaller ve mis kokulu çiçekler...</p>
-        
-        <select id="zodiacSelect">
-            <option value="">Bir Burç Seçiniz...</option>
-            <option value="koc">Koç • Lale 🌷</option>
-            <option value="boga">Boğa • Gül 🌹</option>
-            <option value="ikizler">İkizler • Papatya 🌼</option>
-            <option value="yengec">Yengeç • Beyaz Çiçek 💮</option>
-            <option value="aslan">Aslan • Ayçiçeği 🌻</option>
-            <option value="basak">Başak • Başak 🌾</option>
-            <option value="terazi">Terazi • Pembe Çiçek 🌸</option>
-            <option value="akrep">Akrep • Solmuş Gül 🥀</option>
-            <option value="yay">Yay • Hibiskus 🌺</option>
-            <option value="oglak">Oğlak • Rozet 🏵️</option>
-            <option value="kova">Kova • Nilüfer 🪷</option>
-            <option value="balik">Balık • Buket 💐</option>
-        </select>
-        
-        <textarea id="userNote" rows="3" placeholder="Zarfın içine saklanacak not..."></textarea>
-        
-        <button onclick="generateBouquet()">✨ Buketi Hazırla</button>
+        <h1>Dijital Buket</h1>
+        <p>Paketini seç, çiçeğini ekle, sevgini gönder.</p>
+
+        <div class="control-group">
+            <label>Paket Rengi</label>
+            <div class="color-options" id="paperColors">
+                <div class="color-btn selected" style="background:#d7ccc8" onclick="setPaper('#d7ccc8', '#a1887f', this)"></div> <div class="color-btn" style="background:#ffcdd2" onclick="setPaper('#ffcdd2', '#e57373', this)"></div> <div class="color-btn" style="background:#bbdefb" onclick="setPaper('#bbdefb', '#64b5f6', this)"></div> <div class="color-btn" style="background:#212121" onclick="setPaper('#424242', '#212121', this)"></div> </div>
+        </div>
+
+        <div class="control-group">
+            <label>Çiçek Türü</label>
+            <select id="flowerType">
+                <option value="tulip">Lale Bahçesi 🌷</option>
+                <option value="rose">Kırmızı Güller 🌹</option>
+                <option value="daisy">Papatyalar 🌼</option>
+                <option value="sunflower">Ayçiçekleri 🌻</option>
+                <option value="mixed">Karışık Bahar 💐</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label>Notunuz</label>
+            <input type="text" id="userNote" placeholder="Kısa bir not..." maxlength="50">
+        </div>
+
+        <button class="main-btn" onclick="createBouquet()">Buketi Oluştur</button>
     </div>
 
     <div id="sceneContainer">
-        <div class="bouquet-wrapper">
-            <div id="flowersContainer"></div>
-            <div class="vase"></div>
+        
+        <div class="bouquet-container">
+            <div class="wrapper-back" id="wrapBack"></div>
+
+            <div class="flowers-layer" id="flowersLayer"></div>
+
+            <div class="wrapper-front" id="wrapFront"></div>
+
+            <div class="ribbon"></div>
+
+            <div class="note-tag" id="noteTag"></div>
         </div>
 
-        <div class="envelope-container" id="envelopeBox" onclick="openLetter()">
-            <div class="envelope">
-                <div class="flap"></div>
-                <div class="letter">
-                    <span id="finalNote">Notunuz...</span>
-                </div>
-                <div class="hint">Açmak için dokun 💌</div>
-            </div>
-        </div>
+    </div>
 
-        <div id="shareArea">
-            <button class="share-btn" onclick="copyUrl()">🔗 Linki Kopyala</button>
-            <div id="copyFeedback" style="text-align:center; font-size:12px; color:#ad1457; display:none; margin-top:5px;">Kopyalandı! 💖</div>
-        </div>
+    <div class="bottom-actions" id="actionArea">
+        <button class="share-btn" onclick="copyLink()">Link Kopyala 🔗</button>
+        <div id="copyMsg" style="margin-top:10px; font-size:12px; color:#555; display:none;">Kopyalandı!</div>
     </div>
 
     <script>
-        /* --- ARKA PLAN (SADECE EMOJİ) --- */
-        function createBackground() {
-            const container = document.getElementById('backgroundArea');
-            const emojis = ['🦋', '🌸', '✨', '💮']; // Kelebek ve minik çiçekler
-            
-            // 20 Tane rastgele emoji oluştur
-            for(let i=0; i<20; i++) {
-                const el = document.createElement('div');
-                const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-                el.innerText = randomEmoji;
-                el.className = 'bg-emoji';
-                
-                // Rastgele Konum
-                el.style.left = Math.random() * 100 + 'vw';
-                el.style.top = Math.random() * 100 + 'vh';
-                
-                // Rastgele Boyut
-                const size = 20 + Math.random() * 30; // 20px ile 50px arası
-                el.style.fontSize = size + 'px';
+        // Renk Değişkenleri
+        let currentBack = '#d7ccc8';
+        let currentFront = '#a1887f';
 
-                // Animasyon ata
-                if(randomEmoji === '🦋') {
-                    // Kelebekler uçsun
-                    el.style.animation = `floatButterfly ${10 + Math.random() * 10}s linear infinite`;
-                    el.style.opacity = 0.8;
-                } else {
-                    // Çiçekler aşağı süzülsün
-                    el.style.animation = `floatFlower ${15 + Math.random() * 20}s linear infinite`;
-                    el.style.animationDelay = Math.random() * 5 + 's';
-                }
+        function setPaper(backColor, frontColor, btn) {
+            currentBack = backColor;
+            currentFront = frontColor;
+            
+            // Buton seçili efekti
+            document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+
+        const flowerData = {
+            'tulip': '🌷', 'rose': '🌹', 'daisy': '🌼',
+            'sunflower': '🌻', 'mixed': '🌸'
+        };
+
+        function buildFlowers(type) {
+            const container = document.getElementById('flowersLayer');
+            container.innerHTML = '';
+            const icon = flowerData[type];
+            
+            // 12-15 arası çiçek oluşturup sıkışık yerleştirelim
+            for (let i = 0; i < 15; i++) {
+                const el = document.createElement('div');
+                el.classList.add('flower');
+                el.innerText = icon;
+
+                // Konumlandırma (Ters Üçgen şeklinde dizeceğiz)
+                // Alt tarafta az, üstte çok
+                const bottomOffset = (Math.floor(i / 5)) * 40; // Sıra sıra yüksel
+                const leftOffset = (i % 5) * 40 - 80 + (Math.random() * 20); 
+
+                el.style.bottom = (20 + bottomOffset + Math.random()*20) + 'px';
+                el.style.left = (125 + leftOffset) + 'px'; // Merkezle
+                el.style.transform = `translateX(-50%) rotate(${Math.random()*30 - 15}deg) scale(${0.8 + Math.random()*0.4})`;
+                el.style.zIndex = i;
 
                 container.appendChild(el);
             }
         }
-        createBackground();
 
-        /* --- BUKET OLUŞTURMA --- */
-        const flowers = {
-            'koc': '🌷', 'boga': '🌹', 'ikizler': '🌼', 'yengec': '💮',
-            'aslan': '🌻', 'basak': '🌾', 'terazi': '🌸', 'akrep': '🥀',
-            'yay': '🌺', 'oglak': '🏵️', 'kova': '🪷', 'balik': '💐'
-        };
-
-        function buildBouquet(code) {
-            const container = document.getElementById('flowersContainer');
-            container.innerHTML = '';
-            const emoji = flowers[code] || '🌸';
-            const count = 12; // Çiçek sayısı
-
-            for(let i=0; i<count; i++) {
-                // SAP (Yeşil çizgi)
-                const stem = document.createElement('div');
-                stem.className = 'stem';
-                
-                // ÇİÇEK (Emoji)
-                const flower = document.createElement('div');
-                flower.innerText = emoji;
-                flower.className = 'flower-emoji';
-
-                // YERLEŞİM HESAPLAMALARI
-                const spread = 100; // Yelpaze genişliği
-                const angle = -(spread/2) + (i * (spread/(count-1)));
-                const randomRot = angle + (Math.random() * 10 - 5);
-                
-                // Vazonun arkası mı önü mü?
-                const isBack = (i % 2 === 0);
-                const zIndex = isBack ? 10 : 30; // Vazo (20) ortada kalsın
-                const bottomPos = isBack ? 150 : 120; // Arkadakiler yukarıda
-                const scale = 0.8 + Math.random() * 0.4;
-
-                // Sapı döndür
-                stem.style.transform = `translateX(-50%) rotate(${randomRot}deg)`;
-                stem.style.height = (140 + Math.random() * 40) + 'px'; // Rastgele uzunluk
-                stem.style.zIndex = zIndex - 1;
-
-                // Çiçeği yerleştir
-                flower.style.transform = `translateX(-50%) rotate(${randomRot}deg) scale(${scale})`;
-                flower.style.bottom = (bottomPos + Math.random() * 30) + 'px';
-                flower.style.zIndex = zIndex;
-
-                container.appendChild(stem);
-                container.appendChild(flower);
-            }
-        }
-
-        function generateBouquet() {
-            const val = document.getElementById('zodiacSelect').value;
+        function createBouquet() {
+            const flowerType = document.getElementById('flowerType').value;
             const note = document.getElementById('userNote').value;
-            if(!val) { alert("Lütfen bir çiçek seçin 🌸"); return; }
 
-            document.getElementById('creatorPanel').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('creatorPanel').style.display = 'none';
-                document.getElementById('sceneContainer').style.display = 'flex';
-                buildBouquet(val);
-            }, 500);
+            // Paneli Gizle
+            document.getElementById('creatorPanel').style.display = 'none';
+            const scene = document.getElementById('sceneContainer');
+            scene.style.display = 'flex';
 
-            const finalNote = note ? note : "Sana kocaman sevgiler... 💖";
-            document.getElementById('finalNote').innerText = finalNote;
-            document.getElementById('shareArea').style.display = 'block';
-        }
+            // Renkleri Ata
+            document.getElementById('wrapBack').style.backgroundColor = currentBack;
+            document.getElementById('wrapFront').style.backgroundColor = currentFront;
 
-        let opened = false;
-        function openLetter() {
-            if(opened) return; opened = true;
-            document.getElementById('envelopeBox').classList.add('open');
-            document.querySelector('.hint').style.display = 'none';
-            
-            // Zarf açılınca ekstra kelebekler uçsun
-            for(let i=0; i<5; i++) {
-                const b = document.createElement('div');
-                b.innerText = '🦋';
-                b.style.position = 'absolute';
-                b.style.left = '50%'; b.style.bottom = '150px';
-                b.style.fontSize = '30px'; b.style.zIndex = 100;
-                b.style.transition = 'all 1.5s ease-out';
-                document.getElementById('sceneContainer').appendChild(b);
-                
-                setTimeout(() => {
-                    b.style.transform = `translate(${Math.random()*200-100}px, -400px) rotate(${Math.random()*90}deg)`;
-                    b.style.opacity = 0;
-                }, 50);
+            // Çiçekleri Diz
+            buildFlowers(flowerType);
+
+            // Not Varsa Göster
+            if(note) {
+                const tag = document.getElementById('noteTag');
+                tag.style.display = 'block';
+                tag.innerText = note;
             }
+
+            // Paylaş Butonunu Göster
+            document.getElementById('actionArea').style.display = 'block';
         }
 
-        function copyUrl() {
-            const url = `${window.location.href.split('?')[0]}?s=${document.getElementById('zodiacSelect').value}&n=${encodeURIComponent(document.getElementById('userNote').value)}`;
+        function copyLink() {
+            // Basit link yapısı (Parametre ekleme bu versiyonda görsel odaklı olduğu için sabit bırakıyorum,
+            // istenirse eklenebilir ama şu an estetiği test ediyoruz)
+            const url = window.location.href;
             navigator.clipboard.writeText(url).then(() => {
-                const fb = document.getElementById('copyFeedback');
-                fb.style.display = 'block'; setTimeout(() => fb.style.display = 'none', 3000);
+                const msg = document.getElementById('copyMsg');
+                msg.style.display = 'block';
+                setTimeout(() => msg.style.display = 'none', 2000);
             });
         }
-
-        window.onload = function() {
-            const params = new URLSearchParams(window.location.search);
-            const s = params.get('s'); const n = params.get('n');
-            if(s) {
-                document.getElementById('creatorPanel').style.display = 'none';
-                document.getElementById('sceneContainer').style.display = 'flex';
-                buildBouquet(s);
-                if(n) document.getElementById('finalNote').innerText = n;
-                const btn = document.querySelector('.share-btn');
-                btn.innerText = "🌸 Sen de Tasarla";
-                btn.onclick = () => window.location.href = window.location.pathname;
-                document.getElementById('shareArea').style.display = 'block';
-            }
-        };
     </script>
 </body>
 </html>
