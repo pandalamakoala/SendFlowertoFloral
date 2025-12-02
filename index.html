@@ -4,79 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sihirli Buket</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Great+Vibes&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Great+Vibes&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- AYDINLIK & SAKİN ATMOSFER --- */
+        /* --- GENEL ATMOSFER --- */
         body {
             font-family: 'Quicksand', sans-serif;
-            background: linear-gradient(135deg, #ffe4e1 0%, #ffdae0 100%); /* Toz Pembe */
+            /* Aydınlık Pastel Geçiş */
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
             margin: 0; padding: 0; height: 100vh;
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
             overflow: hidden; color: #555;
         }
 
-        /* Uçuşan Kelebek Emojileri */
+        /* Arka Plan Kelebekleri */
         .bg-butterfly {
-            position: absolute; font-size: 25px;
-            opacity: 0.7; pointer-events: none; user-select: none; z-index: 0;
-            animation: flutter 20s linear infinite;
+            position: absolute; font-size: 24px;
+            opacity: 0.6; pointer-events: none; user-select: none; z-index: 0;
+            animation: flutter 15s linear infinite;
         }
         @keyframes flutter {
             0% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(50px, -50px) rotate(15deg); }
-            50% { transform: translate(0, -100px) rotate(-15deg) scaleX(-1); }
-            75% { transform: translate(-50px, -50px) rotate(15deg); }
+            25% { transform: translate(40px, -40px) rotate(10deg); }
+            50% { transform: translate(0, -80px) rotate(-10deg); }
+            75% { transform: translate(-40px, -40px) rotate(10deg); }
             100% { transform: translate(0, 0) rotate(0deg); }
         }
 
         /* --- KONTROL PANELİ --- */
         #creatorPanel {
-            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px);
             padding: 25px; border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid rgba(255,255,255,0.8);
             width: 90%; max-width: 320px;
             text-align: center; z-index: 1000;
         }
-        h1 { font-family: 'Great Vibes', cursive; color: #d81b60; margin: 0 0 15px 0; font-size: 32px; }
+        h1 { font-family: 'Great Vibes', cursive; color: #d81b60; margin: 0 0 10px 0; font-size: 34px; }
         
         input, select, textarea {
-            width: 100%; padding: 10px; margin: 6px 0;
+            width: 100%; padding: 10px; margin: 5px 0;
             border-radius: 10px; border: 1px solid #f8bbd0;
-            background: rgba(255,255,255,0.7); outline: none;
+            background: rgba(255,255,255,0.9); outline: none;
             font-family: inherit; box-sizing: border-box;
         }
-        input:focus, select:focus, textarea:focus { border-color: #d81b60; background: #fff; }
-        
         button.main-btn {
             width: 100%; padding: 12px; margin-top: 15px;
-            background: linear-gradient(135deg, #ff80ab, #ff4081); color: white;
+            background: linear-gradient(135deg, #ff80ab, #ec407a); color: white;
             border: none; border-radius: 50px; font-weight: bold; cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 64, 129, 0.3); transition: transform 0.2s;
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3); transition: transform 0.2s;
         }
-        button.main-btn:hover { transform: scale(1.03); }
+        button.main-btn:hover { transform: scale(1.05); }
 
         /* --- SAHNE --- */
         #sceneContainer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             display: none; flex-direction: column; align-items: center; justify-content: flex-end;
-            padding-bottom: 60px; z-index: 500;
+            padding-bottom: 50px; z-index: 500;
         }
 
-        /* El Yazısı Başlık (Kimden Kime) */
+        /* --- BAŞLIK (KİMDEN KİME) --- */
         #headerTitle {
-            position: fixed; top: 30px; width: 100%; text-align: center;
-            font-family: 'Dancing Script', cursive; font-size: 28px; color: #880e4f;
-            z-index: 600; text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
-            display: none;
+            position: fixed; top: 40px; width: 100%; text-align: center;
+            font-family: 'Dancing Script', cursive; font-size: 32px; color: #ad1457;
+            z-index: 600; text-shadow: 2px 2px 0px rgba(255,255,255,0.8);
+            display: none; animation: fadeIn 1s ease;
         }
 
-        /* --- BUKET YAPISI (DigitalBouquet Tarzı) --- */
+        /* --- BUKET ALANI --- */
         .bouquet-wrapper {
-            position: relative; width: 240px; height: 380px;
-            margin-bottom: 30px;
+            position: relative; width: 260px; height: 400px;
+            margin-bottom: 20px;
             animation: gentleFloat 4s ease-in-out infinite;
         }
 
@@ -84,58 +83,95 @@
         .paper-wrap {
             position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
             width: 0; height: 0;
-            border-left: 80px solid transparent;
-            border-right: 80px solid transparent;
-            border-top: 240px solid #f3e5f5; /* Lila Kağıt */
-            filter: drop-shadow(0 15px 20px rgba(0,0,0,0.1));
+            border-left: 90px solid transparent;
+            border-right: 90px solid transparent;
+            border-top: 260px solid #f3e5f5; /* Lila Kağıt */
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.1));
             z-index: 10;
         }
-        /* Kağıdın İç Kısmı */
-        .paper-wrap::after {
-            content: ''; position: absolute; top: -240px; left: -80px;
-            width: 160px; height: 50px;
-            background: #e1bee7; border-radius: 50%;
+        .paper-wrap::after { /* İç Kısım */
+            content: ''; position: absolute; top: -260px; left: -90px;
+            width: 180px; height: 60px; background: #e1bee7; border-radius: 50%;
         }
 
-        /* Çiçekler (Sıkı Düzen) */
+        /* Çiçekler */
         .flower-cluster {
-            position: absolute; bottom: 210px; left: 50%; transform: translateX(-50%);
-            width: 180px; height: 140px; z-index: 5;
-            display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-end;
+            position: absolute; bottom: 230px; left: 50%; transform: translateX(-50%);
+            width: 200px; height: 150px; z-index: 5;
         }
         .flower-item {
-            font-size: 55px; line-height: 0.7; position: absolute;
-            filter: drop-shadow(0 5px 8px rgba(0,0,0,0.15));
+            font-size: 58px; line-height: 0.7; position: absolute;
+            filter: drop-shadow(0 5px 6px rgba(0,0,0,0.1));
             transition: transform 0.3s;
             animation: bloom 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .flower-item:hover { transform: scale(1.1) rotate(5deg); z-index: 100 !important; }
 
-        /* --- ZARF (Merkezde) --- */
-        .note-card {
-            position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%) rotate(-2deg);
-            background: #fff; padding: 15px; width: 180px;
-            border-radius: 6px; box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            text-align: center; font-family: 'Great Vibes', cursive;
-            font-size: 20px; color: #880e4f; z-index: 20;
-            border-top: 4px solid #ff80ab; opacity: 0; animation: popIn 0.8s forwards 0.5s;
+        /* --- İNTERAKTİF ZARF --- */
+        .envelope-container {
+            position: absolute; bottom: 60px; left: 50%;
+            transform: translateX(-50%);
+            width: 220px; height: 140px;
+            cursor: pointer; z-index: 50;
+        }
+        
+        .envelope-body {
+            position: absolute; bottom: 0; width: 100%; height: 100%;
+            background: #ff80ab; border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15); z-index: 10;
+        }
+        
+        .envelope-flap {
+            position: absolute; top: 0; left: 0; width: 0; height: 0;
+            border-left: 110px solid transparent;
+            border-right: 110px solid transparent;
+            border-top: 80px solid #ff4081; /* Kapak Rengi */
+            transform-origin: top; transition: 0.6s ease; z-index: 20;
         }
 
-        /* --- BUTONLAR (Köşelerde) --- */
+        .click-hint {
+            position: absolute; bottom: 10px; width: 100%; text-align: center;
+            color: white; font-size: 12px; font-weight: bold; z-index: 25;
+            animation: pulse 2s infinite; pointer-events: none;
+        }
+
+        /* Not Kartı */
+        .letter {
+            position: absolute; bottom: 5px; left: 10px; width: 200px; height: 120px;
+            background: white; border-radius: 4px; padding: 15px; box-sizing: border-box;
+            text-align: center; font-family: 'Great Vibes', cursive; font-size: 20px; color: #880e4f;
+            transition: 0.6s ease; z-index: 5; /* Zarfın içinde */
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* AÇILMA DURUMU */
+        .envelope-container.open .envelope-flap { transform: rotateX(180deg); z-index: 1; }
+        .envelope-container.open .letter { transform: translateY(-100px); z-index: 15; }
+        .envelope-container.open .click-hint { display: none; }
+
+        /* Sürpriz Kelebek (Zarfın içinden çıkan) */
+        .surprise-fly {
+            position: absolute; top: 50%; left: 50%; font-size: 24px;
+            z-index: 100; opacity: 0; pointer-events: none;
+        }
+
+        @keyframes flyOut1 { 0%{opacity:1; transform:translate(-50%,0);} 100%{opacity:0; transform:translate(-100px, -200px) rotate(-20deg);} }
+        @keyframes flyOut2 { 0%{opacity:1; transform:translate(-50%,0);} 100%{opacity:0; transform:translate(0px, -250px) rotate(10deg);} }
+        @keyframes flyOut3 { 0%{opacity:1; transform:translate(-50%,0);} 100%{opacity:0; transform:translate(100px, -200px) rotate(20deg);} }
+
+        /* Butonlar */
         #linkBtnArea { position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: none; }
         #createBtnArea { position: fixed; bottom: 20px; left: 20px; z-index: 1000; display: none; }
-        
         .corner-btn {
-            background: white; color: #d81b60; padding: 10px 20px;
-            border-radius: 30px; border: none; font-weight: bold; font-size: 14px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer;
-            transition: transform 0.2s; display: flex; align-items: center; gap: 5px;
+            background: white; color: #d81b60; padding: 10px 20px; border-radius: 20px;
+            border: none; font-weight: bold; font-size: 13px; box-shadow: 0 5px 10px rgba(0,0,0,0.1); cursor: pointer;
         }
-        .corner-btn:hover { transform: translateY(-3px); }
 
-        @keyframes gentleFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes gentleFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         @keyframes bloom { from { transform: scale(0); } to { transform: scale(1); } }
-        @keyframes popIn { from { transform: translateX(-50%) scale(0); opacity: 0; } to { transform: translateX(-50%) rotate(-2deg) scale(1); opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.6;} }
+
     </style>
 </head>
 <body>
@@ -146,10 +182,8 @@
 
     <div id="creatorPanel">
         <h1>✨ Sihirli Buket ✨</h1>
-        
-        <input type="text" id="senderName" placeholder="Gönderen Adı (Örn: Ali)">
-        <input type="text" id="receiverName" placeholder="Alıcı Adı (Örn: Ayşe)">
-
+        <input type="text" id="senderName" placeholder="Gönderen Adı">
+        <input type="text" id="receiverName" placeholder="Alıcı Adı">
         <select id="zodiacSelect">
             <option value="">Bir Çiçek Seç...</option>
             <option value="koc">Lale 🌷</option>
@@ -165,9 +199,7 @@
             <option value="kova">Orkide 💐</option>
             <option value="balik">Bahar Dalı 💮</option>
         </select>
-        
-        <textarea id="userNote" rows="2" placeholder="Kısa bir not..."></textarea>
-        
+        <textarea id="userNote" rows="2" placeholder="Notunuz..."></textarea>
         <button class="main-btn" onclick="createBouquet()">Buketi Hazırla 💖</button>
     </div>
 
@@ -175,21 +207,24 @@
         <div class="bouquet-wrapper">
             <div class="flower-cluster" id="flowerCluster"></div>
             <div class="paper-wrap"></div>
-            <div class="note-card" id="displayNote"></div>
+            
+            <div class="envelope-container" id="envelope" onclick="openEnvelope()">
+                <div class="letter">
+                    <span id="displayNote">...</span>
+                </div>
+                <div class="envelope-flap"></div>
+                <div class="envelope-body"></div>
+                <div class="click-hint">Açmak için Tıkla ✨</div>
+            </div>
         </div>
     </div>
 
-    <div id="linkBtnArea">
-        <button class="corner-btn" onclick="copyLink()">🔗 Linki Kopyala</button>
-        <div id="copyMsg" style="text-align:right; font-size:12px; color:#d81b60; margin-top:5px; display:none;">Kopyalandı! ✨</div>
-    </div>
-
-    <div id="createBtnArea">
-        <button class="corner-btn" onclick="window.location.href=window.location.pathname">🌸 Sen de Tasarla</button>
-    </div>
+    <div id="linkBtnArea"><button class="corner-btn" onclick="copyLink()">🔗 Linki Kopyala</button>
+    <div id="copyMsg" style="text-align:right; font-size:11px; color:#d81b60; display:none; margin-top:5px;">Kopyalandı!</div></div>
+    <div id="createBtnArea"><button class="corner-btn" onclick="window.location.href=window.location.pathname">🌸 Sen de Yap</button></div>
 
     <script>
-        // --- 1. KELEBEKLERİ OLUŞTUR ---
+        // --- 1. ARKA PLAN KELEBEKLERİ ---
         function initButterflies() {
             const container = document.getElementById('butterflyContainer');
             for(let i=0; i<10; i++) {
@@ -198,126 +233,107 @@
                 b.style.left = Math.random() * 100 + 'vw';
                 b.style.top = Math.random() * 100 + 'vh';
                 b.style.fontSize = (20 + Math.random() * 20) + 'px';
-                b.style.animationDuration = (15 + Math.random() * 15) + 's';
-                b.style.animationDelay = (Math.random() * 5) + 's';
+                b.style.animationDuration = (15 + Math.random() * 10) + 's';
+                b.style.animationDelay = Math.random() * 5 + 's';
                 container.appendChild(b);
             }
         }
         initButterflies();
 
-        const flowers = {
-            'koc': '🌷', 'boga': '🌹', 'ikizler': '🌼', 'yengec': '🪷',
-            'aslan': '🌻', 'basak': '🌾', 'terazi': '🌺', 'akrep': '🥀',
-            'yay': '🪻', 'oglak': '🏵️', 'kova': '💐', 'balik': '💮'
-        };
+        const flowers = { 'koc': '🌷', 'boga': '🌹', 'ikizler': '🌼', 'yengec': '🪷', 'aslan': '🌻', 'basak': '🌾', 'terazi': '🌺', 'akrep': '🥀', 'yay': '🪻', 'oglak': '🏵️', 'kova': '💐', 'balik': '💮' };
 
-        // --- 2. BUKET ALGORİTMASI (Sıkı Düzen) ---
+        // --- 2. BUKET ALGORİTMASI ---
         function buildBouquet(code) {
             const container = document.getElementById('flowerCluster');
             container.innerHTML = '';
             const icon = flowers[code] || '🌸';
-
-            // 15 Çiçek için Sıkı Koordinatlar (Piramit şeklinde)
+            // Piramit Düzeni
             const positions = [
-                // Arka Sıra (En geniş, en altta)
-                { bottom: 35, left: -50, z: 1, s: 0.9 }, { bottom: 40, left: -20, z: 1, s: 1.0 },
-                { bottom: 40, left: 20, z: 1, s: 1.0 },  { bottom: 35, left: 50, z: 1, s: 0.9 },
-                // Orta Sıra
-                { bottom: 65, left: -35, z: 2, s: 1.1 }, { bottom: 75, left: 0, z: 2, s: 1.2 },
-                { bottom: 65, left: 35, z: 2, s: 1.1 },
-                // Ön Sıra
-                { bottom: 95, left: -20, z: 3, s: 1.3 }, { bottom: 95, left: 20, z: 3, s: 1.3 },
-                // En Tepe (Tek Çiçek)
-                { bottom: 125, left: 0, z: 4, s: 1.4 }
+                {b:35,l:-50,z:1}, {b:40,l:-20,z:1}, {b:40,l:20,z:1}, {b:35,l:50,z:1},
+                {b:65,l:-35,z:2}, {b:75,l:0,z:2}, {b:65,l:35,z:2},
+                {b:95,l:-20,z:3}, {b:95,l:20,z:3},
+                {b:125,l:0,z:4}
             ];
+            // +4 Rastgele dolgu
+            for(let i=0; i<4; i++) positions.push({b:50+Math.random()*50, l:Math.random()*60-30, z:2});
 
-            // Geri kalanları rastgele doldur
-            for(let i=10; i<15; i++) {
-                positions.push({
-                    bottom: 50 + Math.random()*60,
-                    left: (Math.random()*80 - 40),
-                    z: 2, s: 0.8 + Math.random()*0.3
-                });
-            }
-
-            positions.forEach((pos, index) => {
+            positions.forEach((pos, i) => {
                 const el = document.createElement('div');
                 el.className = 'flower-item'; el.innerText = icon;
-                el.style.left = `calc(50% + ${pos.left}px)`;
-                el.style.bottom = `${pos.bottom}px`;
-                el.style.zIndex = pos.z;
-                const rot = (Math.random() * 20 - 10);
-                el.style.transform = `translateX(-50%) rotate(${rot}deg) scale(${pos.s})`;
-                el.style.animation = `bloom 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards ${index * 0.05}s`;
+                el.style.left = `calc(50% + ${pos.l}px)`;
+                el.style.bottom = `${pos.b}px`; el.style.zIndex = pos.z;
+                el.style.transform = `translateX(-50%) scale(${0.9 + Math.random()*0.3})`;
+                el.style.animationDelay = i*0.05 + 's';
                 container.appendChild(el);
             });
         }
 
+        // --- 3. ANA AKIŞ ---
         function createBouquet() {
             const sender = document.getElementById('senderName').value;
             const receiver = document.getElementById('receiverName').value;
             const code = document.getElementById('zodiacSelect').value;
             const note = document.getElementById('userNote').value;
-
-            if(!code) { alert("Lütfen bir çiçek seçin ✨"); return; }
-            if(!sender || !receiver) { alert("Lütfen isimleri girin ✨"); return; }
-
+            if(!code || !sender || !receiver) { alert("Lütfen tüm alanları doldurun ✨"); return; }
             showScene(sender, receiver, code, note);
         }
 
-        function showScene(sender, receiver, code, note) {
+        function showScene(s, r, c, n) {
             document.getElementById('creatorPanel').style.display = 'none';
             document.getElementById('sceneContainer').style.display = 'flex';
             document.getElementById('linkBtnArea').style.display = 'block';
             document.getElementById('createBtnArea').style.display = 'block';
 
-            // Başlığı Ayarla
+            // Başlık
             const title = document.getElementById('headerTitle');
-            title.innerText = `${sender}'den ${receiver}'e 💖`;
+            title.innerText = `${s}'den ${r}'e...`;
             title.style.display = 'block';
 
-            buildBouquet(code);
+            // Buket
+            buildBouquet(c);
 
-            // Notu Ayarla
-            const card = document.getElementById('displayNote');
-            let finalNote = "";
-            if(note) finalNote += `"${note}"\n`;
-            finalNote += `~ ${sender}`;
-            card.innerText = finalNote;
+            // Not
+            document.getElementById('displayNote').innerText = n || "Sana özel...";
+        }
+
+        // --- 4. ZARF AÇMA EFEKTİ ---
+        let isOpened = false;
+        function openEnvelope() {
+            if(isOpened) return;
+            isOpened = true;
+            
+            const env = document.getElementById('envelope');
+            env.classList.add('open');
+
+            // 3 Sürpriz Kelebek Oluştur
+            for(let i=1; i<=3; i++) {
+                const fly = document.createElement('div');
+                fly.innerText = '🦋'; fly.className = 'surprise-fly';
+                // Farklı yönlere uçsunlar
+                fly.style.animation = `flyOut${i} 1.5s ease-out forwards`;
+                env.appendChild(fly);
+            }
         }
 
         function copyLink() {
-            const sender = document.getElementById('senderName').value;
-            const receiver = document.getElementById('receiverName').value;
-            const code = document.getElementById('zodiacSelect').value;
-            const note = document.getElementById('userNote').value;
-
-            const url = `${window.location.href.split('?')[0]}?s=${encodeURIComponent(sender)}&r=${encodeURIComponent(receiver)}&c=${code}&n=${encodeURIComponent(note)}`;
-            
+            const url = `${window.location.href.split('?')[0]}?s=${encodeURIComponent(document.getElementById('senderName').value)}&r=${encodeURIComponent(document.getElementById('receiverName').value)}&c=${document.getElementById('zodiacSelect').value}&n=${encodeURIComponent(document.getElementById('userNote').value)}`;
             navigator.clipboard.writeText(url).then(() => {
                 const msg = document.getElementById('copyMsg');
-                msg.style.display = 'block'; setTimeout(()=>msg.style.display='none', 2000);
+                msg.style.display='block'; setTimeout(()=>msg.style.display='none',2000);
             });
         }
 
-        // --- LINK İLE GELİNDİYSE ---
         window.onload = function() {
-            const params = new URLSearchParams(window.location.search);
-            const s = params.get('s'); // Sender
-            const r = params.get('r'); // Receiver
-            const c = params.get('c'); // Code
-            const n = params.get('n'); // Note
-
+            const p = new URLSearchParams(window.location.search);
+            const s=p.get('s'), r=p.get('r'), c=p.get('c'), n=p.get('n');
             if(s && r && c) {
-                // Formu doldur (Kopyalama için)
-                document.getElementById('senderName').value = s;
-                document.getElementById('receiverName').value = r;
-                document.getElementById('zodiacSelect').value = c;
-                if(n) document.getElementById('userNote').value = n;
-
-                showScene(s, r, c, n);
+                document.getElementById('senderName').value=s;
+                document.getElementById('receiverName').value=r;
+                document.getElementById('zodiacSelect').value=c;
+                if(n) document.getElementById('userNote').value=n;
+                showScene(s,r,c,n);
             }
-        };
+        }
     </script>
 </body>
 </html>
