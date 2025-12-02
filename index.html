@@ -33,8 +33,8 @@
 
         /* --- KONTROL PANELİ --- */
         #creatorPanel {
-            background: rgba(255, 255, 255, 0.90); backdrop-filter: blur(12px);
-            padding: 25px 30px; border-radius: 20px;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px);
+            padding: 20px 30px; border-radius: 20px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.1);
             border: 1px solid rgba(255,255,255,0.8);
             width: 90%; max-width: 380px;
@@ -48,15 +48,18 @@
         
         input, select, textarea {
             width: 100%; padding: 12px; margin: 6px 0;
-            border-radius: 12px; border: 1px solid #f8bbd0;
+            border-radius: 10px; border: 1px solid #f8bbd0;
             background: #fff; outline: none;
-            font-family: inherit; box-sizing: border-box; font-size: 14px;
+            font-family: inherit; box-sizing: border-box; font-size: 13px;
             transition: border 0.3s;
         }
         input:focus, select:focus, textarea:focus { border-color: #d81b60; box-shadow: 0 0 5px rgba(216, 27, 96, 0.1); }
         
-        option { font-size: 13px; }
-        optgroup { color: #ad1457; font-weight: bold; margin-top: 10px; }
+        /* Seçim Alanı Başlıkları */
+        .select-label {
+            font-size: 12px; font-weight: bold; color: #ad1457; 
+            text-align: left; margin-top: 10px; margin-bottom: -4px; margin-left: 5px;
+        }
 
         /* YAPAY ZEKA ALANI */
         .ai-assistant {
@@ -113,6 +116,7 @@
             width: 280px; height: 220px; z-index: 10; pointer-events: none;
         }
         
+        /* Çiçek/Hediye Öğesi */
         .gift-item {
             position: absolute;
             font-size: 50px; line-height: 0.7;
@@ -121,6 +125,7 @@
             animation: bloom 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
+        /* Sallanma Efekti (İçerik) */
         .swaying-emoji {
             display: inline-block;
             animation: romanticSway 3s ease-in-out infinite alternate;
@@ -146,7 +151,7 @@
         /* ETKİLEŞİMLİ MÜHÜR */
         .bouquet-seal {
             position: absolute; 
-            bottom: 215px; /* Hizalama düzeltildi */
+            bottom: 215px; 
             left: 50%; 
             transform: translateX(-50%);
             width: 50px; height: 50px; background: #f06292;
@@ -179,7 +184,7 @@
         .bouquet-seal:hover + .meaning-tooltip { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 
-        /* --- ZARF --- */
+        /* --- ZARF (Konumu Sabit) --- */
         .envelope-container {
             position: fixed; 
             bottom: 110px; 
@@ -253,27 +258,31 @@
         <input type="text" id="senderName" placeholder="Gönderen Adı">
         <input type="text" id="receiverName" placeholder="Alıcı Adı">
         
-        <select id="giftSelect">
+        <div class="select-label">Ana Hediye:</div>
+        <select id="mainGift">
             <option value="">Ne Hissettirmek İstersin?</option>
-            
-            <optgroup label="❤️ Duygular & Çiçekler">
-                <option value="gul">Gül - Seni Çok Seviyorum 🌹</option>
-                <option value="lale">Lale - Çok Asil ve Zarifsin 🌷</option>
-                <option value="papatya">Papatya - İçten ve Samimisin 🌼</option>
-                <option value="aycicegi">Ayçiçeği - Sen Benim Güneşimsin 🌻</option>
-                <option value="nilufer">Nilüfer - Huzur Bulmanı İstiyorum 💮</option>
-                <option value="orkide">Orkide - Kimseye Benzemiyorsun 💐</option>
-                <option value="hibiskus">Hibiskus - Zarafetin Büyülüyor 🌺</option>
-                <option value="kir">Kır Çiçeği - Doğallığını Seviyorum 🌾</option>
+            <optgroup label="❤️ Çiçekler">
+                <option value="gul">Gül - Seni Seviyorum 🌹</option>
+                <option value="lale">Lale - Çok Asilsin 🌷</option>
+                <option value="papatya">Papatya - İçten ve Samimi 🌼</option>
+                <option value="aycicegi">Ayçiçeği - Güneşimsin 🌻</option>
+                <option value="nilufer">Nilüfer - Huzur 💮</option>
+                <option value="orkide">Orkide - Eşsizsin 💐</option>
+                <option value="hibiskus">Hibiskus - Zarifsin 🌺</option>
+                <option value="kir">Kır Çiçeği - Doğalsın 🌾</option>
             </optgroup>
+        </select>
 
+        <div class="select-label">Yanına Ekstra (İsteğe Bağlı):</div>
+        <select id="extraGift">
+            <option value="">Sadece Çiçek Olsun</option>
             <optgroup label="🍫 Tatlılar & İçecekler">
-                <option value="cikolata">Çikolata - Mutluluk Getirdim 🍫</option>
-                <option value="seker">Şekerleme - Çocuksu Sevinçler 🍬</option>
-                <option value="lolipop">Lolipop - Gülümsemen İçin 🍭</option>
-                <option value="kahve">Kahve - Sıcak Bir Sohbeti Özledim ☕</option>
-                <option value="cay">Çay - İçin Isınsın Diye 🍵</option>
-                <option value="pasta">Pasta - Bugün Senin Günün 🍰</option>
+                <option value="cikolata">Çikolata - Mutluluk 🍫</option>
+                <option value="seker">Şekerleme - Neşe 🍬</option>
+                <option value="lolipop">Lolipop - Eğlence 🍭</option>
+                <option value="kahve">Kahve - Sohbet ☕</option>
+                <option value="cay">Çay - Demli Muhabbet 🫖</option>
+                <option value="pasta">Pasta - Kutlama 🍰</option>
             </optgroup>
         </select>
         
@@ -333,22 +342,24 @@
         }
         initButterflies();
 
-        // --- VERİLER ---
+        // --- VERİLER VE EMOJİLER ---
+        // Çay ikonunu '🫖' olarak değiştirdik
         const gifts = {
             'lale': '🌷', 'gul': '🌹', 'papatya': '🌼', 'nilufer': '💮', 'aycicegi': '🌻', 'kir': '🌾', 'hibiskus': '🌺', 'orkide': '💐',
-            'cikolata': '🍫', 'seker': '🍬', 'lolipop': '🍭', 'kahve': '☕', 'cay': '🍵', 'pasta': '🍰'
+            'cikolata': '🍫', 'seker': '🍬', 'lolipop': '🍭', 'kahve': '☕', 'cay': '🫖', 'pasta': '🍰'
         };
         const meanings = {
             'gul': 'Seni Çok Seviyorum', 'lale': 'Çok Asil ve Zarifsin', 'papatya': 'İçten ve Samimisin',
             'aycicegi': 'Sen Benim Güneşimsin', 'nilufer': 'Huzur Bulmanı İstiyorum', 'orkide': 'Kimseye Benzemiyorsun',
-            'hibiskus': 'Zarafetin Büyülüyor', 'kir': 'Doğallığını Seviyorum', 'cikolata': 'Mutluluk Getirdim',
-            'seker': 'Çocuksu Sevinçler', 'lolipop': 'Gülümsemen İçin', 'kahve': 'Sıcak Bir Sohbeti Özledim',
-            'cay': 'İçin Isınsın Diye', 'pasta': 'Bugün Senin Günün'
+            'hibiskus': 'Zarafetin Büyülüyor', 'kir': 'Doğallığını Seviyorum', 
+            'cikolata': 'Mutluluk Getirdim', 'seker': 'Çocuksu Sevinçler', 'lolipop': 'Gülümsemen İçin', 
+            'kahve': 'Sıcak Bir Sohbeti Özledim', 'cay': 'Demli Bir Muhabbet', 'pasta': 'Bugün Senin Günün'
         };
 
+        // --- AI MESAJLAR ---
         const aiMessages = {
-            'sevgili': ["Gözlerinin içine baktığımda tüm dertlerimi unutuyorum.", "Sen benim en güzel şansımsın.", "Bu çiçekler güzelliğinin yanında sönük kalır."],
-            'arkadas': ["Mesafeler engel değil, kalbim seninle.", "Kahve bahane, sohbetin şahane.", "İyi ki varsın, iyi ki dostumsun."],
+            'sevgili': ["Gözlerinin içine baktığımda tüm dertlerimi unutuyorum.", "Sen benim en güzel şansımsın.", "Bu hediyeler güzelliğinin yanında sönük kalır."],
+            'arkadas': ["Mesafeler engel değil, kalbim seninle.", "Çay bahane, sohbetin şahane.", "İyi ki varsın, iyi ki dostumsun."],
             'aile': ["Evin sıcaklığını özledim.", "Sizin hakkınızı asla ödeyemem.", "Dünyanın en güzel ailesine sevgilerle."],
             'ozur': ["Kırdığım için çok üzgünüm, affet.", "Barışana kadar sana çikolata göndereceğim.", "Lütfen bu hediyeyi barış elçisi kabul et."]
         };
@@ -364,12 +375,20 @@
             type();
         }
 
-        // --- BUKET DİZİLİMİ ---
-        function buildBouquet(code) {
+        // --- BUKET DİZİLİMİ (KOMBİNASYONLU) ---
+        function buildBouquet(main, extra) {
             const container = document.getElementById('giftCluster');
             container.innerHTML = '';
-            const icon = gifts[code] || '🎁';
-            document.getElementById('meaningTooltip').innerText = meanings[code] || "Sana Özel";
+            
+            const mainIcon = gifts[main] || '🎁';
+            const extraIcon = extra ? gifts[extra] : null;
+            
+            // Tooltip Metni (Birleşik)
+            let tooltipText = meanings[main] || "Sana Özel";
+            if(extra && meanings[extra]) {
+                tooltipText += " & " + meanings[extra];
+            }
+            document.getElementById('meaningTooltip').innerText = tooltipText;
             
             // Geniş ve Ferah Koordinatlar
             const positions = [
@@ -378,14 +397,23 @@
                 {b:120, l:-30, z:3, s:1.2}, {b:120, l:30, z:3, s:1.2},
                 {b:160, l:0, z:4, s:1.3}
             ];
+            // Dolgu
             for(let i=0; i<4; i++) positions.push({b:40+Math.random()*90, l:Math.random()*110-55, z:2, s:0.8 + Math.random()*0.2});
 
             positions.forEach((pos, i) => {
                 const el = document.createElement('div');
                 el.className = 'gift-item'; 
+                
+                // --- KARIŞTIRMA MANTIĞI ---
+                // Eğer ekstra hediye seçildiyse, her 3. öğeyi ekstra yap
+                let currentIcon = mainIcon;
+                if (extraIcon && (i % 3 === 0 || i === 9)) { // 9. index tepe noktası
+                    currentIcon = extraIcon;
+                }
+
                 // İçine salınan span ekle
                 const swaySpeed = 2 + Math.random() * 3;
-                el.innerHTML = `<span class="swaying-emoji" style="animation-duration:${swaySpeed}s">${icon}</span>`;
+                el.innerHTML = `<span class="swaying-emoji" style="animation-duration:${swaySpeed}s">${currentIcon}</span>`;
                 
                 el.style.left = `calc(50% + ${pos.l}px)`;
                 el.style.bottom = `${pos.b}px`; el.style.zIndex = pos.z;
@@ -399,14 +427,15 @@
         function createGift() {
             const sender = document.getElementById('senderName').value;
             const receiver = document.getElementById('receiverName').value;
-            const code = document.getElementById('giftSelect').value;
+            const main = document.getElementById('mainGift').value;
+            const extra = document.getElementById('extraGift').value;
             const note = document.getElementById('userNote').value;
-            if(!code || !sender || !receiver) { alert("Lütfen isimleri ve hediyeyi seçin ✨"); return; }
             
-            showScene(sender, receiver, code, note);
+            if(!main || !sender || !receiver) { alert("Lütfen isimleri ve ana hediyeyi seçin ✨"); return; }
+            showScene(sender, receiver, main, extra, note);
         }
 
-        function showScene(s, r, c, n) {
+        function showScene(s, r, main, extra, n) {
             document.getElementById('creatorPanel').style.display = 'none';
             document.getElementById('sceneContainer').style.display = 'flex';
             document.getElementById('linkBtnArea').style.display = 'block';
@@ -416,7 +445,7 @@
             title.innerText = `${s}'den ${r}'e...`;
             title.style.display = 'block';
             
-            buildBouquet(c);
+            buildBouquet(main, extra);
             document.getElementById('displayNote').innerText = n || "Sevgilerle...";
         }
 
@@ -451,7 +480,13 @@
         }
 
         function copyLink() {
-            const url = `${window.location.href.split('?')[0]}?s=${encodeURIComponent(document.getElementById('senderName').value)}&r=${encodeURIComponent(document.getElementById('receiverName').value)}&c=${document.getElementById('giftSelect').value}&n=${encodeURIComponent(document.getElementById('userNote').value)}`;
+            const s = document.getElementById('senderName').value;
+            const r = document.getElementById('receiverName').value;
+            const m = document.getElementById('mainGift').value;
+            const e = document.getElementById('extraGift').value;
+            const n = document.getElementById('userNote').value;
+
+            const url = `${window.location.href.split('?')[0]}?s=${encodeURIComponent(s)}&r=${encodeURIComponent(r)}&m=${m}&e=${e}&n=${encodeURIComponent(n)}`;
             navigator.clipboard.writeText(url).then(() => {
                 const msg = document.getElementById('copyMsg');
                 msg.style.display='block'; setTimeout(()=>msg.style.display='none',2000);
@@ -460,13 +495,14 @@
 
         window.onload = function() {
             const p = new URLSearchParams(window.location.search);
-            const s=p.get('s'), r=p.get('r'), c=p.get('c'), n=p.get('n');
-            if(s && r && c) {
+            const s=p.get('s'), r=p.get('r'), m=p.get('m'), e=p.get('e'), n=p.get('n');
+            if(s && r && m) {
                 document.getElementById('senderName').value=s;
                 document.getElementById('receiverName').value=r;
-                document.getElementById('giftSelect').value=c;
+                document.getElementById('mainGift').value=m;
+                if(e) document.getElementById('extraGift').value=e;
                 if(n) document.getElementById('userNote').value=n;
-                showScene(s,r,c,n);
+                showScene(s,r,m,e,n);
             }
         }
     </script>
