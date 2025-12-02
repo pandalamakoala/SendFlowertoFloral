@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sihirli Buket</title>
+    <title>Sihirli Hediye</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Great+Vibes&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     
     <style>
         /* --- GENEL ATMOSFER --- */
         body {
             font-family: 'Quicksand', sans-serif;
-            /* Aydınlık Pastel Geçiş */
             background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
             margin: 0; padding: 0; height: 100vh;
             display: flex; flex-direction: column;
@@ -49,6 +48,10 @@
             background: rgba(255,255,255,0.9); outline: none;
             font-family: inherit; box-sizing: border-box;
         }
+        
+        /* Grup Başlıkları */
+        optgroup { font-family: 'Quicksand', sans-serif; color: #ad1457; font-weight: bold; }
+
         button.main-btn {
             width: 100%; padding: 12px; margin-top: 15px;
             background: linear-gradient(135deg, #ff80ab, #ec407a); color: white;
@@ -72,7 +75,7 @@
             display: none; animation: fadeIn 1s ease;
         }
 
-        /* --- BUKET ALANI --- */
+        /* --- PAKET ALANI --- */
         .bouquet-wrapper {
             position: relative; width: 260px; height: 400px;
             margin-bottom: 20px;
@@ -94,13 +97,13 @@
             width: 180px; height: 60px; background: #e1bee7; border-radius: 50%;
         }
 
-        /* Çiçekler */
-        .flower-cluster {
+        /* Hediyeler (Çiçek/Çikolata) */
+        .gift-cluster {
             position: absolute; bottom: 230px; left: 50%; transform: translateX(-50%);
             width: 200px; height: 150px; z-index: 5;
         }
-        .flower-item {
-            font-size: 58px; line-height: 0.7; position: absolute;
+        .gift-item {
+            font-size: 50px; line-height: 0.7; position: absolute;
             filter: drop-shadow(0 5px 6px rgba(0,0,0,0.1));
             transition: transform 0.3s;
             animation: bloom 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -149,7 +152,7 @@
         .envelope-container.open .letter { transform: translateY(-100px); z-index: 15; }
         .envelope-container.open .click-hint { display: none; }
 
-        /* Sürpriz Kelebek (Zarfın içinden çıkan) */
+        /* Sürpriz Kelebek */
         .surprise-fly {
             position: absolute; top: 50%; left: 50%; font-size: 24px;
             z-index: 100; opacity: 0; pointer-events: none;
@@ -181,31 +184,41 @@
     <div id="headerTitle"></div>
 
     <div id="creatorPanel">
-        <h1>✨ Sihirli Buket ✨</h1>
+        <h1>✨ Sihirli Hediye ✨</h1>
         <input type="text" id="senderName" placeholder="Gönderen Adı">
         <input type="text" id="receiverName" placeholder="Alıcı Adı">
-        <select id="zodiacSelect">
-            <option value="">Bir Çiçek Seç...</option>
-            <option value="koc">Lale 🌷</option>
-            <option value="boga">Gül 🌹</option>
-            <option value="ikizler">Papatya 🌼</option>
-            <option value="yengec">Nilüfer 🪷</option>
-            <option value="aslan">Ayçiçeği 🌻</option>
-            <option value="basak">Başak 🌾</option>
-            <option value="terazi">Hibiskus 🌺</option>
-            <option value="akrep">Karanfil 🥀</option>
-            <option value="yay">Mor Çiçek 🪻</option>
-            <option value="oglak">Rozet 🏵️</option>
-            <option value="kova">Orkide 💐</option>
-            <option value="balik">Bahar Dalı 💮</option>
+        
+        <select id="giftSelect">
+            <option value="">Bir Sürpriz Seç...</option>
+            
+            <optgroup label="🌸 Çiçekler">
+                <option value="lale">Lale 🌷</option>
+                <option value="gul">Gül 🌹</option>
+                <option value="papatya">Papatya 🌼</option>
+                <option value="aycicegi">Ayçiçeği 🌻</option>
+                <option value="nilufer">Nilüfer 🪷</option>
+                <option value="orkide">Orkide 💐</option>
+                <option value="hibiskus">Hibiskus 🌺</option>
+                <option value="kir">Kır Çiçeği 🌾</option>
+            </optgroup>
+
+            <optgroup label="🍫 Tatlılar & İçecekler">
+                <option value="cikolata">Çikolata 🍫</option>
+                <option value="seker">Şekerleme 🍬</option>
+                <option value="lolipop">Lolipop 🍭</option>
+                <option value="kahve">Sıcak Kahve ☕</option>
+                <option value="cay">Demli Çay 🍵</option>
+                <option value="pasta">Pasta Dilimi 🍰</option>
+            </optgroup>
         </select>
+        
         <textarea id="userNote" rows="2" placeholder="Notunuz..."></textarea>
-        <button class="main-btn" onclick="createBouquet()">Buketi Hazırla 💖</button>
+        <button class="main-btn" onclick="createGift()">Hediyeyi Hazırla 🎁</button>
     </div>
 
     <div id="sceneContainer">
         <div class="bouquet-wrapper">
-            <div class="flower-cluster" id="flowerCluster"></div>
+            <div class="gift-cluster" id="giftCluster"></div>
             <div class="paper-wrap"></div>
             
             <div class="envelope-container" id="envelope" onclick="openEnvelope()">
@@ -221,7 +234,7 @@
 
     <div id="linkBtnArea"><button class="corner-btn" onclick="copyLink()">🔗 Linki Kopyala</button>
     <div id="copyMsg" style="text-align:right; font-size:11px; color:#d81b60; display:none; margin-top:5px;">Kopyalandı!</div></div>
-    <div id="createBtnArea"><button class="corner-btn" onclick="window.location.href=window.location.pathname">🌸 Sen de Yap</button></div>
+    <div id="createBtnArea"><button class="corner-btn" onclick="window.location.href=window.location.pathname">🎁 Sen de Hazırla</button></div>
 
     <script>
         // --- 1. ARKA PLAN KELEBEKLERİ ---
@@ -240,40 +253,55 @@
         }
         initButterflies();
 
-        const flowers = { 'koc': '🌷', 'boga': '🌹', 'ikizler': '🌼', 'yengec': '🪷', 'aslan': '🌻', 'basak': '🌾', 'terazi': '🌺', 'akrep': '🥀', 'yay': '🪻', 'oglak': '🏵️', 'kova': '💐', 'balik': '💮' };
+        // --- HEDİYE SÖZLÜĞÜ ---
+        const gifts = {
+            // Çiçekler
+            'lale': '🌷', 'gul': '🌹', 'papatya': '🌼', 'nilufer': '🪷',
+            'aycicegi': '🌻', 'kir': '🌾', 'hibiskus': '🌺', 'orkide': '💐',
+            // Tatlılar
+            'cikolata': '🍫', 'seker': '🍬', 'lolipop': '🍭',
+            'kahve': '☕', 'cay': '🍵', 'pasta': '🍰'
+        };
 
-        // --- 2. BUKET ALGORİTMASI ---
+        // --- 2. PAKET OLUŞTURMA ALGORİTMASI ---
         function buildBouquet(code) {
-            const container = document.getElementById('flowerCluster');
+            const container = document.getElementById('giftCluster');
             container.innerHTML = '';
-            const icon = flowers[code] || '🌸';
-            // Piramit Düzeni
+            const icon = gifts[code] || '🎁';
+            
+            // Piramit Düzeni (Katman Katman)
             const positions = [
                 {b:35,l:-50,z:1}, {b:40,l:-20,z:1}, {b:40,l:20,z:1}, {b:35,l:50,z:1},
                 {b:65,l:-35,z:2}, {b:75,l:0,z:2}, {b:65,l:35,z:2},
                 {b:95,l:-20,z:3}, {b:95,l:20,z:3},
                 {b:125,l:0,z:4}
             ];
-            // +4 Rastgele dolgu
+            // +4 Rastgele dolgu (Daha dolgun görünmesi için)
             for(let i=0; i<4; i++) positions.push({b:50+Math.random()*50, l:Math.random()*60-30, z:2});
 
             positions.forEach((pos, i) => {
                 const el = document.createElement('div');
-                el.className = 'flower-item'; el.innerText = icon;
+                el.className = 'gift-item'; el.innerText = icon;
                 el.style.left = `calc(50% + ${pos.l}px)`;
                 el.style.bottom = `${pos.b}px`; el.style.zIndex = pos.z;
-                el.style.transform = `translateX(-50%) scale(${0.9 + Math.random()*0.3})`;
+                
+                // Rastgele açı ve boyut
+                const rot = Math.random() * 20 - 10;
+                const scale = 0.9 + Math.random() * 0.3;
+                
+                el.style.transform = `translateX(-50%) rotate(${rot}deg) scale(${scale})`;
                 el.style.animationDelay = i*0.05 + 's';
                 container.appendChild(el);
             });
         }
 
         // --- 3. ANA AKIŞ ---
-        function createBouquet() {
+        function createGift() {
             const sender = document.getElementById('senderName').value;
             const receiver = document.getElementById('receiverName').value;
-            const code = document.getElementById('zodiacSelect').value;
+            const code = document.getElementById('giftSelect').value;
             const note = document.getElementById('userNote').value;
+            
             if(!code || !sender || !receiver) { alert("Lütfen tüm alanları doldurun ✨"); return; }
             showScene(sender, receiver, code, note);
         }
@@ -289,11 +317,11 @@
             title.innerText = `${s}'den ${r}'e...`;
             title.style.display = 'block';
 
-            // Buket
+            // Hediye Paketi
             buildBouquet(c);
 
             // Not
-            document.getElementById('displayNote').innerText = n || "Sana özel...";
+            document.getElementById('displayNote').innerText = n || "Afiyet olsun! 💖";
         }
 
         // --- 4. ZARF AÇMA EFEKTİ ---
@@ -309,14 +337,13 @@
             for(let i=1; i<=3; i++) {
                 const fly = document.createElement('div');
                 fly.innerText = '🦋'; fly.className = 'surprise-fly';
-                // Farklı yönlere uçsunlar
                 fly.style.animation = `flyOut${i} 1.5s ease-out forwards`;
                 env.appendChild(fly);
             }
         }
 
         function copyLink() {
-            const url = `${window.location.href.split('?')[0]}?s=${encodeURIComponent(document.getElementById('senderName').value)}&r=${encodeURIComponent(document.getElementById('receiverName').value)}&c=${document.getElementById('zodiacSelect').value}&n=${encodeURIComponent(document.getElementById('userNote').value)}`;
+            const url = `${window.location.href.split('?')[0]}?s=${encodeURIComponent(document.getElementById('senderName').value)}&r=${encodeURIComponent(document.getElementById('receiverName').value)}&c=${document.getElementById('giftSelect').value}&n=${encodeURIComponent(document.getElementById('userNote').value)}`;
             navigator.clipboard.writeText(url).then(() => {
                 const msg = document.getElementById('copyMsg');
                 msg.style.display='block'; setTimeout(()=>msg.style.display='none',2000);
@@ -329,7 +356,7 @@
             if(s && r && c) {
                 document.getElementById('senderName').value=s;
                 document.getElementById('receiverName').value=r;
-                document.getElementById('zodiacSelect').value=c;
+                document.getElementById('giftSelect').value=c;
                 if(n) document.getElementById('userNote').value=n;
                 showScene(s,r,c,n);
             }
