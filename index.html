@@ -57,7 +57,7 @@
         
         /* Seçim Alanı Başlıkları */
         .select-label {
-            font-size: 12px; font-weight: bold; color: #ad1457; 
+            font-size: 13px; font-weight: bold; color: #ad1457; 
             text-align: left; margin-top: 10px; margin-bottom: -4px; margin-left: 5px;
         }
 
@@ -75,7 +75,7 @@
         .ai-btn:hover { background: #880e4f; }
 
         button.main-btn {
-            width: 100%; padding: 14px; margin-top: 10px;
+            width: 100%; padding: 14px; margin-top: 15px;
             background: linear-gradient(135deg, #ff80ab, #ec407a); color: white;
             border: none; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 16px;
             box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3); transition: transform 0.2s;
@@ -116,7 +116,6 @@
             width: 280px; height: 220px; z-index: 10; pointer-events: none;
         }
         
-        /* Çiçek/Hediye Öğesi */
         .gift-item {
             position: absolute;
             font-size: 50px; line-height: 0.7;
@@ -125,7 +124,6 @@
             animation: bloom 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Sallanma Efekti (İçerik) */
         .swaying-emoji {
             display: inline-block;
             animation: romanticSway 3s ease-in-out infinite alternate;
@@ -184,12 +182,12 @@
         .bouquet-seal:hover + .meaning-tooltip { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 
-        /* --- ZARF (Konumu Sabit) --- */
+        /* --- ZARF --- */
         .envelope-container {
             position: fixed; 
             bottom: 110px; 
             right: 20px;
-            width: 140px; height: 90px; cursor: pointer; z-index: 1000;
+            width: 140px; height: 90px; cursor: pointer; z-index: 2000;
             transition: transform 0.3s;
         }
         .envelope-container:hover { transform: scale(1.05); }
@@ -219,7 +217,7 @@
             box-shadow: 0 -2px 5px rgba(0,0,0,0.1); opacity: 0;
         }
 
-        .envelope-container.open { z-index: 2000; transform: scale(1.3) translate(-40px, -60px); }
+        .envelope-container.open { z-index: 3000; transform: scale(1.3) translate(-40px, -60px); }
         .envelope-container.open .envelope-flap { transform: rotateX(180deg); }
         .envelope-container.open .letter { transform: translateY(-90px) rotate(-2deg); opacity: 1; z-index: 30; }
         .envelope-container.open .click-hint { display: none; }
@@ -229,7 +227,8 @@
             top: 50%; left: 50%; opacity: 0; pointer-events: none; z-index: 9999;
         }
 
-        #linkBtnArea, #createBtnArea { position: fixed; bottom: 20px; z-index: 900; display: none; }
+        /* Butonlar (Z-index artırıldı) */
+        #linkBtnArea, #createBtnArea { position: fixed; bottom: 20px; z-index: 2000; display: none; }
         #linkBtnArea { right: 20px; } #createBtnArea { left: 20px; }
         .corner-btn {
             background: white; color: #d81b60; padding: 12px 24px; border-radius: 30px;
@@ -343,7 +342,6 @@
         initButterflies();
 
         // --- VERİLER VE EMOJİLER ---
-        // Çay ikonunu '🫖' olarak değiştirdik
         const gifts = {
             'lale': '🌷', 'gul': '🌹', 'papatya': '🌼', 'nilufer': '💮', 'aycicegi': '🌻', 'kir': '🌾', 'hibiskus': '🌺', 'orkide': '💐',
             'cikolata': '🍫', 'seker': '🍬', 'lolipop': '🍭', 'kahve': '☕', 'cay': '🫖', 'pasta': '🍰'
@@ -356,7 +354,6 @@
             'kahve': 'Sıcak Bir Sohbeti Özledim', 'cay': 'Demli Bir Muhabbet', 'pasta': 'Bugün Senin Günün'
         };
 
-        // --- AI MESAJLAR ---
         const aiMessages = {
             'sevgili': ["Gözlerinin içine baktığımda tüm dertlerimi unutuyorum.", "Sen benim en güzel şansımsın.", "Bu hediyeler güzelliğinin yanında sönük kalır."],
             'arkadas': ["Mesafeler engel değil, kalbim seninle.", "Çay bahane, sohbetin şahane.", "İyi ki varsın, iyi ki dostumsun."],
@@ -424,6 +421,7 @@
             });
         }
 
+        // --- BUTON İŞLEVİ DÜZELTİLDİ ---
         function createGift() {
             const sender = document.getElementById('senderName').value;
             const receiver = document.getElementById('receiverName').value;
