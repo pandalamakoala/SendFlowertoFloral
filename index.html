@@ -145,7 +145,9 @@
         
         /* ETKİLEŞİMLİ MÜHÜR */
         .bouquet-seal {
-            position: absolute; bottom: 215px; left: 50%; 
+            position: absolute; 
+            bottom: 215px; /* Hizalama düzeltildi */
+            left: 50%; 
             transform: translateX(-50%);
             width: 50px; height: 50px; background: #f06292;
             border-radius: 50%; box-shadow: 0 5px 10px rgba(0,0,0,0.2);
@@ -154,7 +156,10 @@
             display: flex; align-items: center; justify-content: center;
             font-size: 20px; color: white;
         }
-        .bouquet-seal:hover { transform: translateX(-50%) scale(1.2); background: #ec407a; }
+        .bouquet-seal:hover { 
+            transform: translateX(-50%) scale(1.2); 
+            background: #ec407a; 
+        }
 
         /* ANLAM BALONCUĞU */
         .meaning-tooltip {
@@ -176,11 +181,14 @@
 
         /* --- ZARF --- */
         .envelope-container {
-            position: fixed; bottom: 110px; right: 20px;
+            position: fixed; 
+            bottom: 110px; 
+            right: 20px;
             width: 140px; height: 90px; cursor: pointer; z-index: 1000;
             transition: transform 0.3s;
         }
         .envelope-container:hover { transform: scale(1.05); }
+        
         .envelope-body {
             position: absolute; bottom: 0; width: 100%; height: 100%;
             background: #f06292; border-radius: 6px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 10;
@@ -216,12 +224,8 @@
             top: 50%; left: 50%; opacity: 0; pointer-events: none; z-index: 9999;
         }
 
-        /* Butonlar & Müzik */
-        #linkBtnArea, #createBtnArea, #musicControl { position: fixed; z-index: 900; }
-        #linkBtnArea { bottom: 20px; right: 20px; display: none; } 
-        #createBtnArea { bottom: 20px; left: 20px; display: none; }
-        #musicControl { top: 20px; right: 20px; cursor: pointer; font-size: 24px; background: rgba(255,255,255,0.7); padding: 10px; border-radius: 50%; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-
+        #linkBtnArea, #createBtnArea { position: fixed; bottom: 20px; z-index: 900; display: none; }
+        #linkBtnArea { right: 20px; } #createBtnArea { left: 20px; }
         .corner-btn {
             background: white; color: #d81b60; padding: 12px 24px; border-radius: 30px;
             border: none; font-weight: bold; font-size: 14px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer;
@@ -240,11 +244,6 @@
     </style>
 </head>
 <body>
-
-    <audio id="bgMusic" loop>
-        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3" type="audio/mp3">
-    </audio>
-    <div id="musicControl" onclick="toggleMusic()">🔇</div>
 
     <div id="butterflyContainer"></div>
     <div id="headerTitle"></div>
@@ -321,7 +320,6 @@
     <div id="createBtnArea"><button class="corner-btn" onclick="window.location.href=window.location.pathname">🎁 Sen de Hazırla</button></div>
 
     <script>
-        // --- ARKA PLAN VE MÜZİK ---
         function initButterflies() {
             const container = document.getElementById('butterflyContainer');
             for(let i=0; i<8; i++) {
@@ -334,22 +332,6 @@
             }
         }
         initButterflies();
-
-        // Müzik Kontrolü
-        let isMusicPlaying = false;
-        function toggleMusic() {
-            const audio = document.getElementById('bgMusic');
-            const btn = document.getElementById('musicControl');
-            if(isMusicPlaying) {
-                audio.pause();
-                btn.innerText = "🔇";
-            } else {
-                audio.volume = 0.4;
-                audio.play();
-                btn.innerText = "🎵";
-            }
-            isMusicPlaying = !isMusicPlaying;
-        }
 
         // --- VERİLER ---
         const gifts = {
@@ -406,3 +388,87 @@
                 el.innerHTML = `<span class="swaying-emoji" style="animation-duration:${swaySpeed}s">${icon}</span>`;
                 
                 el.style.left = `calc(50% + ${pos.l}px)`;
+                el.style.bottom = `${pos.b}px`; el.style.zIndex = pos.z;
+                
+                el.style.transform = `translateX(-50%) scale(${pos.s})`;
+                el.style.animationDelay = i*0.08 + 's';
+                container.appendChild(el);
+            });
+        }
+
+        function createGift() {
+            const sender = document.getElementById('senderName').value;
+            const receiver = document.getElementById('receiverName').value;
+            const code = document.getElementById('giftSelect').value;
+            const note = document.getElementById('userNote').value;
+            if(!code || !sender || !receiver) { alert("Lütfen isimleri ve hediyeyi seçin ✨"); return; }
+            
+            showScene(sender, receiver, code, note);
+        }
+
+        function showScene(s, r, c, n) {
+            document.getElementById('creatorPanel').style.display = 'none';
+            document.getElementById('sceneContainer').style.display = 'flex';
+            document.getElementById('linkBtnArea').style.display = 'block';
+            document.getElementById('createBtnArea').style.display = 'block';
+            
+            const title = document.getElementById('headerTitle');
+            title.innerText = `${s}'den ${r}'e...`;
+            title.style.display = 'block';
+            
+            buildBouquet(c);
+            document.getElementById('displayNote').innerText = n || "Sevgilerle...";
+        }
+
+        // --- GÖRSEL ŞÖLEN ---
+        let isOpened = false;
+        function openEnvelope() {
+            if(isOpened) return; isOpened = true;
+            const env = document.getElementById('envelope');
+            env.classList.add('open');
+
+            const icons = ['❤️', '✨', '🦋', '🌸', '💫', '💖', '🎉'];
+            const colors = ['#ff4081', '#ff80ab', '#ea80fc', '#b388ff', '#8c9eff'];
+
+            for(let i=0; i<60; i++) {
+                const p = document.createElement('div');
+                p.className = 'firework-particle';
+                p.innerText = icons[Math.floor(Math.random()*icons.length)];
+                
+                const angle = Math.random() * Math.PI * 2; 
+                const velocity = 50 + Math.random() * 250; 
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity - 100;
+
+                p.style.setProperty('--tx', `${tx}px`);
+                p.style.setProperty('--ty', `${ty}px`);
+                p.style.color = colors[Math.floor(Math.random()*colors.length)];
+                p.style.animation = `explode ${1 + Math.random()}s ease-out forwards`;
+                p.style.fontSize = (10 + Math.random()*20) + 'px';
+                
+                env.appendChild(p);
+            }
+        }
+
+        function copyLink() {
+            const url = `${window.location.href.split('?')[0]}?s=${encodeURIComponent(document.getElementById('senderName').value)}&r=${encodeURIComponent(document.getElementById('receiverName').value)}&c=${document.getElementById('giftSelect').value}&n=${encodeURIComponent(document.getElementById('userNote').value)}`;
+            navigator.clipboard.writeText(url).then(() => {
+                const msg = document.getElementById('copyMsg');
+                msg.style.display='block'; setTimeout(()=>msg.style.display='none',2000);
+            });
+        }
+
+        window.onload = function() {
+            const p = new URLSearchParams(window.location.search);
+            const s=p.get('s'), r=p.get('r'), c=p.get('c'), n=p.get('n');
+            if(s && r && c) {
+                document.getElementById('senderName').value=s;
+                document.getElementById('receiverName').value=r;
+                document.getElementById('giftSelect').value=c;
+                if(n) document.getElementById('userNote').value=n;
+                showScene(s,r,c,n);
+            }
+        }
+    </script>
+</body>
+</html>
