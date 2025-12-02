@@ -33,8 +33,8 @@
 
         /* --- KONTROL PANELİ --- */
         #creatorPanel {
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
-            padding: 20px 30px; border-radius: 20px;
+            background: rgba(255, 255, 255, 0.90); backdrop-filter: blur(12px);
+            padding: 25px 30px; border-radius: 20px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.1);
             border: 1px solid rgba(255,255,255,0.8);
             width: 90%; max-width: 380px;
@@ -44,37 +44,39 @@
         }
         #creatorPanel::-webkit-scrollbar { width: 0; }
 
-        h1 { font-family: 'Great Vibes', cursive; color: #d81b60; margin: 0 0 10px 0; font-size: 32px; }
+        h1 { font-family: 'Great Vibes', cursive; color: #d81b60; margin: 0 0 10px 0; font-size: 36px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5); }
         
         input, select, textarea {
             width: 100%; padding: 12px; margin: 6px 0;
-            border-radius: 10px; border: 1px solid #f8bbd0;
+            border-radius: 12px; border: 1px solid #f8bbd0;
             background: #fff; outline: none;
             font-family: inherit; box-sizing: border-box; font-size: 14px;
             transition: border 0.3s;
         }
-        input:focus, select:focus, textarea:focus { border-color: #d81b60; }
+        input:focus, select:focus, textarea:focus { border-color: #d81b60; box-shadow: 0 0 5px rgba(216, 27, 96, 0.1); }
+        
         option { font-size: 13px; }
 
+        /* YAPAY ZEKA ALANI */
         .ai-assistant {
             background: #fce4ec; padding: 12px; border-radius: 12px;
-            margin: 10px 0; border: 1px dashed #f48fb1;
+            margin: 12px 0; border: 1px dashed #f48fb1;
         }
         .ai-title { font-size: 12px; font-weight: bold; color: #ad1457; margin-bottom: 5px; display: flex; align-items: center; justify-content: center; gap:5px; }
         .ai-btn {
-            background: #ad1457; color: white; border: none; padding: 8px 12px;
-            border-radius: 8px; font-size: 12px; cursor: pointer; width: 100%;
+            background: #ad1457; color: white; border: none; padding: 10px;
+            border-radius: 8px; font-size: 13px; cursor: pointer; width: 100%;
             margin-top: 5px; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 5px;
         }
         .ai-btn:hover { background: #880e4f; }
 
         button.main-btn {
-            width: 100%; padding: 12px; margin-top: 10px;
+            width: 100%; padding: 14px; margin-top: 10px;
             background: linear-gradient(135deg, #ff80ab, #ec407a); color: white;
-            border: none; border-radius: 50px; font-weight: bold; cursor: pointer;
+            border: none; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 16px;
             box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3); transition: transform 0.2s;
         }
-        button.main-btn:hover { transform: scale(1.05); }
+        button.main-btn:hover { transform: scale(1.03); }
 
         /* --- SAHNE --- */
         #sceneContainer {
@@ -106,11 +108,11 @@
             z-index: 5;
         }
         .gift-cluster {
-            position: absolute; bottom: 240px; left: 50%; transform: translateX(-50%);
-            width: 260px; height: 200px; z-index: 10; pointer-events: none;
+            position: absolute; bottom: 250px; left: 50%; transform: translateX(-50%);
+            width: 280px; height: 220px; z-index: 10; pointer-events: none;
         }
         
-        /* Çiçek Kapsayıcı (Konumlandırma İçin) */
+        /* Çiçek/Hediye Öğesi */
         .gift-item {
             position: absolute;
             font-size: 50px; line-height: 0.7;
@@ -119,13 +121,12 @@
             animation: bloom 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Çiçek İçerik (Sürekli Salınım Hareketi İçin) */
+        /* Sallanma Efekti (İçerik) */
         .swaying-emoji {
             display: inline-block;
             animation: romanticSway 3s ease-in-out infinite alternate;
             transform-origin: bottom center;
         }
-
         @keyframes romanticSway {
             0% { transform: rotate(-5deg) translateY(0px); }
             100% { transform: rotate(5deg) translateY(-3px); }
@@ -143,9 +144,11 @@
             border-radius: 50%; box-shadow: 0 5px 10px rgba(0,0,0,0.1);
         }
         
-        /* Etkileşimli Mühür */
+        /* ETKİLEŞİMLİ MÜHÜR (DÜZELTİLDİ) */
         .bouquet-seal {
-            position: absolute; bottom: 200px; left: 50%; transform: translateX(-50%);
+            position: absolute; bottom: 200px; left: 50%; 
+            /* Sadece translate kullanıyoruz, hover'da scale ekleyeceğiz */
+            transform: translateX(-50%);
             width: 50px; height: 50px; background: #f06292;
             border-radius: 50%; box-shadow: 0 5px 10px rgba(0,0,0,0.2);
             z-index: 20; cursor: help;
@@ -153,7 +156,13 @@
             display: flex; align-items: center; justify-content: center;
             font-size: 20px; color: white;
         }
-        .bouquet-seal:hover { transform: translateX(-50%) scale(1.2); background: #ec407a; }
+        /* Hover olunca kaymayı engellemek için translateX'i tekrar ediyoruz */
+        .bouquet-seal:hover { 
+            transform: translateX(-50%) scale(1.2); 
+            background: #ec407a; 
+        }
+
+        /* ANLAM BALONCUĞU */
         .meaning-tooltip {
             position: absolute; bottom: 260px; left: 50%; transform: translateX(-50%) translateY(10px);
             background: rgba(255, 255, 255, 0.95);
@@ -171,10 +180,10 @@
         .bouquet-seal:hover + .meaning-tooltip { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 
-        /* --- ZARF (Konumu Güncellendi) --- */
+        /* --- ZARF (Konumu Sabit) --- */
         .envelope-container {
             position: fixed; 
-            bottom: 110px; /* Butonların üzerine çıkması için yükseltildi */
+            bottom: 110px; /* Butonların üzerinde */
             right: 20px;
             width: 140px; height: 90px; cursor: pointer; z-index: 1000;
             transition: transform 0.3s;
@@ -254,7 +263,7 @@
                 <option value="aycicegi">Ayçiçeği - Sen Benim Güneşimsin</option>
                 <option value="nilufer">Nilüfer - Huzur Bulmanı İstiyorum</option>
                 <option value="orkide">Orkide - Kimseye Benzemiyorsun</option>
-                <option value="hibiskus">Hibiskus - Çok Narinsin</option>
+                <option value="hibiskus">Hibiskus - Zarafetin Büyülüyor</option>
                 <option value="kir">Kır Çiçeği - Doğallığını Seviyorum</option>
             </optgroup>
 
@@ -324,14 +333,15 @@
         }
         initButterflies();
 
+        // --- VERİLER ---
         const gifts = {
-            'lale': '🌷', 'gul': '🌹', 'papatya': '🌼', 'nilufer': '🪷', 'aycicegi': '🌻', 'kir': '🌾', 'hibiskus': '🌺', 'orkide': '💐',
+            'lale': '🌷', 'gul': '🌹', 'papatya': '🌼', 'nilufer': '💮', 'aycicegi': '🌻', 'kir': '🌾', 'hibiskus': '🌺', 'orkide': '💐',
             'cikolata': '🍫', 'seker': '🍬', 'lolipop': '🍭', 'kahve': '☕', 'cay': '🍵', 'pasta': '🍰'
         };
         const meanings = {
             'gul': 'Seni Çok Seviyorum', 'lale': 'Çok Asil ve Zarifsin', 'papatya': 'İçten ve Samimisin',
             'aycicegi': 'Sen Benim Güneşimsin', 'nilufer': 'Huzur Bulmanı İstiyorum', 'orkide': 'Kimseye Benzemiyorsun',
-            'hibiskus': 'Çok Narinsin', 'kir': 'Doğallığını Seviyorum', 'cikolata': 'Mutluluk Getirdim',
+            'hibiskus': 'Zarafetin Büyülüyor', 'kir': 'Doğallığını Seviyorum', 'cikolata': 'Mutluluk Getirdim',
             'seker': 'Çocuksu Sevinçler', 'lolipop': 'Gülümsemen İçin', 'kahve': 'Sıcak Bir Sohbeti Özledim',
             'cay': 'İçin Isınsın Diye', 'pasta': 'Bugün Senin Günün'
         };
@@ -354,7 +364,7 @@
             type();
         }
 
-        // --- YENİ BUKET DİZİLİMİ (FERAH & HAREKETLİ) ---
+        // --- BUKET DİZİLİMİ (FERAH & HAREKETLİ) ---
         function buildBouquet(code) {
             const container = document.getElementById('giftCluster');
             container.innerHTML = '';
@@ -373,17 +383,16 @@
             positions.forEach((pos, i) => {
                 const el = document.createElement('div');
                 el.className = 'gift-item'; 
-                // İçine "Swaying" span ekle
-                const swaySpeed = 2 + Math.random() * 3; // Rastgele hız
+                // İçine salınan span ekle
+                const swaySpeed = 2 + Math.random() * 3;
                 el.innerHTML = `<span class="swaying-emoji" style="animation-duration:${swaySpeed}s">${icon}</span>`;
                 
                 el.style.left = `calc(50% + ${pos.l}px)`;
                 el.style.bottom = `${pos.b}px`; el.style.zIndex = pos.z;
                 
-                // Statik Konumlandırma (Dönüş JS ile değil CSS animasyonla yapılıyor)
+                // Statik Konum (Dönüş animasyon ile)
                 el.style.transform = `translateX(-50%) scale(${pos.s})`;
                 
-                // Giriş Animasyonu Gecikmesi
                 el.style.animationDelay = i*0.08 + 's';
                 container.appendChild(el);
             });
@@ -412,6 +421,7 @@
             document.getElementById('displayNote').innerText = n || "Sevgilerle...";
         }
 
+        // --- GÖRSEL ŞÖLEN ---
         let isOpened = false;
         function openEnvelope() {
             if(isOpened) return; isOpened = true;
