@@ -2,8 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Benim Hediyem</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Benim Hediyem</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Great+Vibes&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     
     <style>
@@ -17,34 +16,54 @@
             overflow: hidden; color: #555;
         }
 
-        /* Arka Plan Kelebekleri */
+        /* --- ARKA PLAN EFEKTLERİ --- */
         .bg-butterfly {
             position: absolute; font-size: 24px; opacity: 0.6; 
             pointer-events: none; user-select: none; z-index: 0;
-            animation: flutter 20s linear infinite;
+            animation: flutter 25s linear infinite;
         }
-        @keyframes flutter {
-            0% { transform: translate(0,0) rotate(0deg); }
-            25% { transform: translate(50px,-50px) rotate(15deg); }
-            50% { transform: translate(0,-100px) rotate(-15deg) scaleX(-1); }
-            75% { transform: translate(-50px,-50px) rotate(15deg); }
-            100% { transform: translate(0,0) rotate(0deg); }
+        
+        /* Işıltı (Sparkle) Efekti */
+        .sparkle {
+            position: absolute; width: 4px; height: 4px; background: white;
+            border-radius: 50%; pointer-events: none; z-index: 0;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+            animation: twinkle 3s ease-in-out infinite;
         }
 
-        /* --- KONTROL PANELİ --- */
+        @keyframes flutter {
+            0% { transform: translate(0,0) rotate(0deg); }
+            25% { transform: translate(60px,-60px) rotate(15deg); }
+            50% { transform: translate(0,-120px) rotate(-15deg) scaleX(-1); }
+            75% { transform: translate(-60px,-60px) rotate(15deg); }
+            100% { transform: translate(0,0) rotate(0deg); }
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* --- KONTROL PANELİ (DÜZELTİLDİ: KAYDIRMA VE ERİŞİM) --- */
         #creatorPanel {
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px);
-            padding: 20px 30px; border-radius: 20px;
+            background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(15px);
+            padding: 20px 25px; border-radius: 20px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.8);
+            border: 1px solid rgba(255,255,255,0.9);
             width: 90%; max-width: 380px;
             text-align: center; z-index: 1000;
             transition: all 0.5s ease;
-            max-height: 90vh; overflow-y: auto;
+            
+            /* Kaydırma Ayarları */
+            max-height: 85vh; /* Ekranın %85'ini geçmesin */
+            overflow-y: auto; /* İçerik sığmazsa kaydır */
+            display: flex; flex-direction: column; /* İçeriği düzenle */
         }
-        #creatorPanel::-webkit-scrollbar { width: 0; }
+        
+        /* Panel içindeki kaydırma çubuğunu güzelleştir */
+        #creatorPanel::-webkit-scrollbar { width: 6px; }
+        #creatorPanel::-webkit-scrollbar-thumb { background-color: #ff80ab; border-radius: 10px; }
 
-        h1 { font-family: 'Great Vibes', cursive; color: #d81b60; margin: 0 0 10px 0; font-size: 36px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5); }
+        h1 { font-family: 'Great Vibes', cursive; color: #d81b60; margin: 0 0 10px 0; font-size: 34px; text-shadow: 1px 1px 2px rgba(255,255,255,0.5); flex-shrink: 0; }
         
         input, select, textarea {
             width: 100%; padding: 12px; margin: 6px 0;
@@ -55,28 +74,31 @@
         }
         input:focus, select:focus, textarea:focus { border-color: #d81b60; box-shadow: 0 0 5px rgba(216, 27, 96, 0.1); }
         
-        option { font-size: 13px; }
-        optgroup { color: #ad1457; font-weight: bold; margin-top: 10px; }
-        .select-label { font-size: 13px; font-weight: bold; color: #ad1457; text-align: left; margin-top: 10px; margin-bottom: -4px; margin-left: 5px; }
+        .select-label {
+            font-size: 13px; font-weight: bold; color: #ad1457; 
+            text-align: left; margin-top: 10px; margin-bottom: -4px; margin-left: 5px;
+        }
+        optgroup { color: #ad1457; font-weight: bold; margin-top: 5px; }
 
         /* YAPAY ZEKA ALANI */
         .ai-assistant {
-            background: #fce4ec; padding: 12px; border-radius: 12px;
-            margin: 12px 0; border: 1px dashed #f48fb1;
+            background: #fce4ec; padding: 10px; border-radius: 12px;
+            margin: 15px 0; border: 1px dashed #f48fb1; flex-shrink: 0;
         }
         .ai-title { font-size: 12px; font-weight: bold; color: #ad1457; margin-bottom: 5px; display: flex; align-items: center; justify-content: center; gap:5px; }
         .ai-btn {
-            background: #ad1457; color: white; border: none; padding: 10px;
-            border-radius: 8px; font-size: 13px; cursor: pointer; width: 100%;
-            margin-top: 5px; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 5px;
+            background: #ad1457; color: white; border: none; padding: 8px;
+            border-radius: 8px; font-size: 12px; cursor: pointer; width: 100%;
+            margin-top: 5px; transition: 0.2s;
         }
         .ai-btn:hover { background: #880e4f; }
 
         button.main-btn {
-            width: 100%; padding: 14px; margin-top: 10px;
+            width: 100%; padding: 14px; margin-top: 15px; margin-bottom: 5px;
             background: linear-gradient(135deg, #ff80ab, #ec407a); color: white;
             border: none; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 16px;
             box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3); transition: transform 0.2s;
+            flex-shrink: 0; /* Butonun küçülmesini engelle */
         }
         button.main-btn:hover { transform: scale(1.03); }
 
@@ -91,7 +113,7 @@
             position: fixed; top: 40px; width: 100%; text-align: center;
             font-family: 'Dancing Script', cursive; font-size: 32px; color: #ad1457;
             z-index: 600; text-shadow: 2px 2px 0px rgba(255,255,255,0.8);
-            display: none; animation: fadeIn 1s ease;
+            display: none; animation: fadeIn 1s ease; padding: 0 20px;
         }
 
         /* --- BUKET ALANI --- */
@@ -154,12 +176,13 @@
             font-size: 20px; color: white;
         }
         .bouquet-seal:hover { transform: translateX(-50%) scale(1.2); background: #ec407a; }
-
-        /* ANLAM BALONCUĞU */
+        
+        /* Tooltip */
         .meaning-tooltip {
             position: absolute; bottom: 275px; left: 50%; transform: translateX(-50%) translateY(10px);
             background: rgba(255, 255, 255, 0.95); padding: 10px 20px; border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15); font-size: 14px; font-weight: bold; color: #ad1457;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            font-size: 14px; font-weight: bold; color: #ad1457;
             white-space: nowrap; pointer-events: none; opacity: 0;
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 100;
         }
@@ -195,7 +218,6 @@
             animation: pulse 2s infinite; pointer-events: none; opacity: 1; transition: opacity 0.3s;
         }
 
-        /* Not Kartı */
         .letter {
             position: absolute; bottom: 5px; left: 5px; width: 130px; height: 80px;
             background: white; border-radius: 4px; padding: 15px; box-sizing: border-box;
@@ -205,38 +227,33 @@
             box-shadow: 0 -2px 5px rgba(0,0,0,0.1); opacity: 0; overflow-y: auto;
         }
 
-        /* DURUM: AÇIK (OPEN) */
+        /* Zarf Durumları */
         .envelope-container.open { transform: scale(1.3) translate(-40px, -60px); }
         .envelope-container.open .envelope-flap { transform: rotateX(180deg); }
         .envelope-container.open .letter { transform: translateY(-90px) rotate(-2deg); opacity: 1; z-index: 30; }
         .envelope-container.open .click-hint { opacity: 0; }
 
-        /* DURUM: KALP MODU (HEART MODE) */
+        /* Kalp Modu */
         .envelope-container.heart-mode {
-            width: 50px; height: 50px; bottom: 130px; right: 50px; /* Buketin altına yakın bir yer */
-            transform: none; /* Reset transform */
+            width: 50px; height: 50px; bottom: 130px; right: 50px; transform: none;
         }
         .envelope-container.heart-mode .envelope-body {
             background: #d81b60; border-radius: 50%;
             box-shadow: 0 0 15px rgba(216, 27, 96, 0.6);
             display: flex; align-items: center; justify-content: center;
         }
-        /* Kalp İkonu Ekleme */
-        .envelope-container.heart-mode .envelope-body::after {
-            content: '❤️'; font-size: 24px; color: white;
-        }
-        /* Kalp modunda diğer parçaları gizle */
+        .envelope-container.heart-mode .envelope-body::after { content: '❤️'; font-size: 24px; color: white; }
         .envelope-container.heart-mode .envelope-flap, 
         .envelope-container.heart-mode .letter,
         .envelope-container.heart-mode .click-hint { opacity: 0; pointer-events: none; }
 
-
+        /* Görsel Şölen */
         .firework-particle {
             position: absolute; width: 8px; height: 8px; border-radius: 50%;
             top: 50%; left: 50%; opacity: 0; pointer-events: none; z-index: 9999;
         }
 
-        /* Butonlar */
+        /* Alt Butonlar */
         #linkBtnArea, #createBtnArea { position: fixed; bottom: 20px; z-index: 2000; display: none; }
         #linkBtnArea { right: 20px; } #createBtnArea { left: 20px; }
         .corner-btn {
@@ -253,6 +270,7 @@
             0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; } 
             100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; } 
         }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 
     </style>
 </head>
@@ -269,16 +287,18 @@
         <div class="select-label">Ana Hediye:</div>
         <select id="mainGiftSelect">
             <option value="">Ne Hissettirmek İstersin?</option>
+            
             <optgroup label="❤️ Duygular & Çiçekler">
                 <option value="gul">Gül - Seni Çok Seviyorum 🌹</option>
                 <option value="lale">Lale - Çok Asil ve Zarifsin 🌷</option>
                 <option value="papatya">Papatya - İçten ve Samimisin 🌼</option>
                 <option value="aycicegi">Ayçiçeği - Sen Benim Güneşimsin 🌻</option>
-                <option value="nilufer">Nilüfer - Seninle Huzur Buluyorum 💮</option>
+                <option value="nilufer">Nilüfer - Benim İçin Senin Yanın En Huzurlu Yer 💮</option>
                 <option value="orkide">Orkide - Kimseye Benzemiyorsun 💐</option>
                 <option value="hibiskus">Hibiskus - Zarafetin Büyülüyor 🌺</option>
-                <option value="kir">Kır Çiçeği - Doğallığını Seviyorum 🌾</option>
+                <option value="kir">Kır Çiçeği - Doğallığını Seviyorum 🌿</option>
             </optgroup>
+
             <optgroup label="🍫 Tatlılar & İçecekler">
                 <option value="cikolata">Çikolata - Mutluluk Getirdim 🍫</option>
                 <option value="seker">Şekerleme - Çocuksu Sevinçler 🍬</option>
@@ -346,25 +366,35 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             
-            // --- 1. ARKA PLAN ---
+            // --- 1. EFEKTLER (KELEBEK & IŞILTI) ---
             const butterflyContainer = document.getElementById('butterflyContainer');
-            for(let i=0; i<8; i++) {
+            
+            // Kelebekler (Arttırıldı)
+            for(let i=0; i<15; i++) {
                 const b = document.createElement('div');
                 b.className = 'bg-butterfly'; b.innerText = '🦋';
                 b.style.left = Math.random()*100+'vw'; b.style.top = Math.random()*100+'vh';
-                b.style.fontSize = (20+Math.random()*20)+'px';
-                b.style.animationDuration = (15+Math.random()*10)+'s';
+                b.style.fontSize = (15+Math.random()*25)+'px';
+                b.style.animationDuration = (15+Math.random()*15)+'s';
                 butterflyContainer.appendChild(b);
+            }
+            // Işıltılar (Sparkles)
+            for(let i=0; i<20; i++) {
+                const s = document.createElement('div');
+                s.className = 'sparkle';
+                s.style.left = Math.random()*100+'vw'; s.style.top = Math.random()*100+'vh';
+                s.style.animationDelay = (Math.random()*3)+'s';
+                butterflyContainer.appendChild(s);
             }
 
             // --- VERİLER ---
             const gifts = {
-                'lale': '🌷', 'gul': '🌹', 'papatya': '🌼', 'nilufer': '💮', 'aycicegi': '🌻', 'kir': '🌾', 'hibiskus': '🌺', 'orkide': '💐',
+                'lale': '🌷', 'gul': '🌹', 'papatya': '🌼', 'nilufer': '💮', 'aycicegi': '🌻', 'kir': '🌿', 'hibiskus': '🌺', 'orkide': '💐',
                 'cikolata': '🍫', 'seker': '🍬', 'lolipop': '🍭', 'kahve': '☕', 'cay': '🫖', 'pasta': '🍰'
             };
             const meanings = {
                 'gul': 'Seni Çok Seviyorum', 'lale': 'Çok Asil ve Zarifsin', 'papatya': 'İçten ve Samimisin',
-                'aycicegi': 'Sen Benim Güneşimsin', 'nilufer': 'Seninle Huzur Buluyorum', 'orkide': 'Kimseye Benzemiyorsun',
+                'aycicegi': 'Sen Benim Güneşimsin', 'nilufer': 'Benim İçin Senin Yanın En Huzurlu Yer', 'orkide': 'Kimseye Benzemiyorsun',
                 'hibiskus': 'Zarafetin Büyülüyor', 'kir': 'Doğallığını Seviyorum', 
                 'cikolata': 'Mutluluk Getirdim', 'seker': 'Çocuksu Sevinçler', 'lolipop': 'Gülümsemen İçin', 
                 'kahve': 'Sıcak Bir Sohbeti Özledim', 'cay': 'Demli Bir Muhabbet', 'pasta': 'Bugün Senin Günün'
@@ -377,39 +407,43 @@
                 'ozur': ["Kırdığım için çok üzgünüm, affet.", "Barışana kadar sana çikolata göndereceğim.", "Lütfen bu hediyeyi barış elçisi kabul et."]
             };
 
-            // --- TÜRKÇE EK HESAPLAYICI (PROPER SUFFIX) ---
-            function getTurkishSuffix(name, type) {
+            // --- AKILLI EK MOTORU (TURKISH GRAMMAR ENGINE) ---
+            function getSuffix(name, type) {
+                if(!name) return "";
                 const vowels = "aıoueiöü";
                 const hardConsonants = "fstkçşhp";
                 const lastChar = name.slice(-1).toLowerCase();
-                const lastVowel = name.split('').reverse().find(c => vowels.includes(c.toLowerCase())) || 'e'; 
+                // Son ünlü harfi bul
+                let lastVowel = 'e';
+                for(let i=name.length-1; i>=0; i--) {
+                    if(vowels.includes(name[i].toLowerCase())) { lastVowel = name[i].toLowerCase(); break; }
+                }
 
-                // Ayırıcı
-                let apostrophe = "'";
-
-                if (type === 'from') { // -den, -dan, -ten, -tan
+                const apostrophe = "'";
+                
+                if (type === 'from') { // -den/-dan/-ten/-tan
                     const isHard = hardConsonants.includes(lastChar);
-                    const isBackVowel = "aıou".includes(lastVowel); 
+                    const isBack = "aıou".includes(lastVowel);
                     const d_t = isHard ? 't' : 'd';
-                    const a_e = isBackVowel ? 'a' : 'e';
+                    const a_e = isBack ? 'a' : 'e';
                     return `${apostrophe}${d_t}${a_e}n`;
-                } else { // -e, -a, -ye, -ya (Basit Yaklaşım)
-                    const isBackVowel = "aıou".includes(lastVowel);
+                } else { // -e/-a/-ye/-ya
+                    const isBack = "aıou".includes(lastVowel);
                     const endsWithVowel = vowels.includes(lastChar);
-                    const buffer = endsWithVowel ? 'y' : '';
-                    const a_e = isBackVowel ? 'a' : 'e';
-                    return `${apostrophe}${buffer}${a_e}`;
+                    const y = endsWithVowel ? 'y' : '';
+                    const a_e = isBack ? 'a' : 'e';
+                    return `${apostrophe}${y}${a_e}`;
                 }
             }
 
-            // --- BUTON TANIMLAMALARI ---
+            // --- ELEMANLAR ---
             const btnCreate = document.getElementById('btnCreate');
             const btnAi = document.getElementById('btnAi');
             const btnLink = document.getElementById('btnLink');
             const btnNew = document.getElementById('btnNew');
             const envelope = document.getElementById('envelope');
 
-            // --- YAPAY ZEKA BUTONU ---
+            // --- AI BUTONU ---
             btnAi.addEventListener('click', function() {
                 const rel = document.getElementById('aiRelationSelect').value;
                 const msgs = aiMessages[rel];
@@ -421,7 +455,7 @@
                 type();
             });
 
-            // --- HEDİYEYİ HAZIRLA BUTONU ---
+            // --- HAZIRLA BUTONU ---
             btnCreate.addEventListener('click', function() {
                 const sender = document.getElementById('senderName').value;
                 const receiver = document.getElementById('receiverName').value;
@@ -433,7 +467,7 @@
                 showScene(sender, receiver, main, extra, note);
             });
 
-            // --- LINK KOPYALA BUTONU ---
+            // --- LINK BUTONU ---
             btnLink.addEventListener('click', function() {
                 const s = document.getElementById('senderName').value;
                 const r = document.getElementById('receiverName').value;
@@ -450,33 +484,28 @@
 
             btnNew.addEventListener('click', function() { window.location.href = window.location.pathname; });
 
-            // --- DÖNÜŞEN ZARF MANTIĞI ---
+            // --- ZARF MANTIĞI (AÇ/KAPA/KALP) ---
             let isEnvelopeOpen = false;
             let isHeartMode = false;
 
             envelope.addEventListener('click', function() {
-                // Eğer kalp modundaysa -> Tekrar Zarf Ol ve Aç
                 if (isHeartMode) {
                     envelope.classList.remove('heart-mode');
                     setTimeout(() => {
                         envelope.classList.add('open');
                         fireConfetti();
-                    }, 300); // Geçiş efekti için bekle
+                    }, 300);
                     isHeartMode = false;
                     isEnvelopeOpen = true;
                     return;
                 }
 
-                // Eğer kapalıysa -> Aç
                 if (!isEnvelopeOpen) {
                     envelope.classList.add('open');
                     fireConfetti();
                     isEnvelopeOpen = true;
-                } 
-                // Eğer açıksa -> Kapan ve Kalp Ol
-                else {
+                } else {
                     envelope.classList.remove('open');
-                    // Kapanma animasyonu bitince kalp ol
                     setTimeout(() => {
                         envelope.classList.add('heart-mode');
                         isHeartMode = true;
@@ -503,29 +532,29 @@
                 }
             }
 
-            // --- SAHNEYİ GÖSTERME ---
+            // --- SAHNE GÖSTERİMİ ---
             function showScene(s, r, main, extra, n) {
                 document.getElementById('creatorPanel').style.display = 'none';
                 document.getElementById('sceneContainer').style.display = 'flex';
                 document.getElementById('linkBtnArea').style.display = 'block';
                 document.getElementById('createBtnArea').style.display = 'block';
                 
-                // Başlık Ayarı (Otomatik Ekler)
-                const fromSuffix = getTurkishSuffix(s, 'from'); // -den
-                const toSuffix = getTurkishSuffix(r, 'to'); // -e
+                const fromSuffix = getSuffix(s, 'from');
+                const toSuffix = getSuffix(r, 'to');
                 
                 const title = document.getElementById('headerTitle');
-                title.innerText = `${s}${fromSuffix} ${r}${toSuffix}...`; // Örn: Ahmet'ten Ayşe'ye...
+                title.innerText = `${s}${fromSuffix} ${r}${toSuffix}...`;
                 title.style.display = 'block';
                 
                 buildBouquet(main, extra);
                 document.getElementById('displayNote').innerText = n || "Sevgilerle...";
             }
 
-            // --- BUKET İNŞA ---
+            // --- BUKET OLUŞTURMA ---
             function buildBouquet(main, extra) {
                 const container = document.getElementById('giftCluster');
                 container.innerHTML = '';
+                
                 const mainIcon = gifts[main] || '🎁';
                 const extraIcon = extra ? gifts[extra] : null;
                 
@@ -533,10 +562,12 @@
                 if(extra && meanings[extra]) { tooltipText += " & " + meanings[extra]; }
                 document.getElementById('meaningTooltip').innerText = tooltipText;
                 
+                // Konumlar (Ferah)
                 const positions = [
                     {b:10, l:-80, z:1, s:0.85}, {b:25, l:-35, z:1, s:0.9}, {b:25, l:35, z:1, s:0.9}, {b:10, l:80, z:1, s:0.85},
                     {b:70, l:-55, z:2, s:1.0}, {b:85, l:0, z:2, s:1.1}, {b:70, l:55, z:2, s:1.0},
-                    {b:120, l:-30, z:3, s:1.2}, {b:120, l:30, z:3, s:1.2}, {b:160, l:0, z:4, s:1.3}
+                    {b:120, l:-30, z:3, s:1.2}, {b:120, l:30, z:3, s:1.2},
+                    {b:160, l:0, z:4, s:1.3}
                 ];
                 for(let i=0; i<4; i++) positions.push({b:40+Math.random()*90, l:Math.random()*110-55, z:2, s:0.8 + Math.random()*0.2});
 
@@ -554,7 +585,7 @@
                 });
             }
 
-            // --- LINK KONTROLÜ ---
+            // --- LINK İLE AÇILIŞ ---
             const p = new URLSearchParams(window.location.search);
             const s=p.get('s'), r=p.get('r'), m=p.get('m'), e=p.get('e'), n=p.get('n');
             if(s && r && m) {
