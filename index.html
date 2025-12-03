@@ -17,7 +17,7 @@
             overflow: hidden; color: #555;
         }
 
-        /* Arka Plan Kelebekleri */
+        /* Arka Plan Efektleri */
         .bg-butterfly {
             position: absolute; font-size: 24px; opacity: 0.6; 
             pointer-events: none; user-select: none; z-index: 0;
@@ -51,13 +51,8 @@
             width: 90%; max-width: 380px;
             text-align: center; z-index: 1000;
             transition: all 0.5s ease;
-            
-            max-height: 80vh; 
-            overflow-y: auto; 
-            overflow-x: hidden;
-            display: block; 
+            max-height: 80vh; overflow-y: auto; overflow-x: hidden; display: block;
         }
-        
         #creatorPanel::-webkit-scrollbar { width: 5px; }
         #creatorPanel::-webkit-scrollbar-thumb { background-color: #ff80ab; border-radius: 10px; }
 
@@ -78,7 +73,6 @@
         }
         optgroup { color: #ad1457; font-weight: bold; }
 
-        /* YAPAY ZEKA ALANI */
         .ai-assistant {
             background: #fce4ec; padding: 10px; border-radius: 12px;
             margin: 10px 0; border: 1px dashed #f48fb1;
@@ -91,7 +85,6 @@
         }
         .ai-btn:hover { background: #880e4f; }
 
-        /* ANA BUTON */
         .main-btn {
             display: block; width: 100%; padding: 14px; margin-top: 15px; margin-bottom: 5px;
             background: linear-gradient(135deg, #ff80ab, #ec407a); color: white;
@@ -121,7 +114,6 @@
             animation: gentleFloat 4s ease-in-out infinite;
         }
 
-        /* Katmanlar */
         .paper-back {
             position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
             width: 0; height: 0;
@@ -163,10 +155,11 @@
             border-radius: 50%; box-shadow: 0 5px 10px rgba(0,0,0,0.1);
         }
         
-        /* ETKİLEŞİMLİ MÜHÜR (HİZALAMA DÜZELTİLDİ: 205px) */
+        /* ETKİLEŞİMLİ MÜHÜR (HİZALAMA DÜZELTİLDİ: 185px) */
+        /* Bu değer kalbi tam olarak alttaki pembe dairenin içine oturtur */
         .bouquet-seal {
             position: absolute; 
-            bottom: 205px; /* Tam ortaya oturması için güncellendi */
+            bottom: 185px; 
             left: 50%; 
             transform: translateX(-50%);
             width: 50px; height: 50px; background: #f06292;
@@ -180,7 +173,7 @@
         
         /* Tooltip */
         .meaning-tooltip {
-            position: absolute; bottom: 275px; left: 50%; transform: translateX(-50%) translateY(10px);
+            position: absolute; bottom: 245px; left: 50%; transform: translateX(-50%) translateY(10px);
             background: rgba(255, 255, 255, 0.95); padding: 10px 20px; border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
             font-size: 14px; font-weight: bold; color: #ad1457;
@@ -196,7 +189,7 @@
         /* --- ZARF --- */
         .envelope-container {
             position: fixed; bottom: 110px; right: 20px;
-            width: 140px; height: 90px; cursor: pointer; z-index: 1000;
+            width: 140px; height: 90px; cursor: pointer; z-index: 2000;
             transition: transform 0.3s;
         }
         .envelope-container:hover { transform: scale(1.05); }
@@ -383,7 +376,7 @@
                 'ozur': ["Kırdığım için çok üzgünüm, affet.", "Barışana kadar sana çikolata göndereceğim.", "Lütfen bu hediyeyi barış elçisi kabul et."]
             };
 
-            // --- AKILLI EK MOTORU ---
+            // --- AKILLI EK MOTORU (GELİŞMİŞ) ---
             function getSuffix(name, type) {
                 if(!name) return "";
                 const vowels = "aıoueiöü";
