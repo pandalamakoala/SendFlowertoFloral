@@ -149,17 +149,12 @@
             border-left: 130px solid transparent; border-right: 130px solid transparent;
             border-top: 240px solid #f3e5f5; z-index: 15;
         }
-        .paper-front::after {
-            content: ''; position: absolute; top: -240px; left: -30px;
-            width: 60px; height: 60px; background: #f06292;
-            border-radius: 50%; box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-        }
+        /* Alttaki pembe yuvarlak kaldırıldı (::after) */
         
-        /* ETKİLEŞİMLİ MÜHÜR (HİZALAMA DÜZELTİLDİ: 185px) */
-        /* Bu değer kalbi tam olarak alttaki pembe dairenin içine oturtur */
+        /* ETKİLEŞİMLİ MÜHÜR (HİZALAMA GÜNCELLENDİ: 200px) */
         .bouquet-seal {
             position: absolute; 
-            bottom: 185px; 
+            bottom: 200px; /* Kağıdın ucuna denk gelecek şekilde ayarlandı */
             left: 50%; 
             transform: translateX(-50%);
             width: 50px; height: 50px; background: #f06292;
@@ -173,7 +168,7 @@
         
         /* Tooltip */
         .meaning-tooltip {
-            position: absolute; bottom: 245px; left: 50%; transform: translateX(-50%) translateY(10px);
+            position: absolute; bottom: 260px; left: 50%; transform: translateX(-50%) translateY(10px);
             background: rgba(255, 255, 255, 0.95); padding: 10px 20px; border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
             font-size: 14px; font-weight: bold; color: #ad1457;
@@ -189,7 +184,7 @@
         /* --- ZARF --- */
         .envelope-container {
             position: fixed; bottom: 110px; right: 20px;
-            width: 140px; height: 90px; cursor: pointer; z-index: 2000;
+            width: 140px; height: 90px; cursor: pointer; z-index: 1000;
             transition: transform 0.3s;
         }
         .envelope-container:hover { transform: scale(1.05); }
@@ -376,7 +371,7 @@
                 'ozur': ["Kırdığım için çok üzgünüm, affet.", "Barışana kadar sana çikolata göndereceğim.", "Lütfen bu hediyeyi barış elçisi kabul et."]
             };
 
-            // --- AKILLI EK MOTORU (GELİŞMİŞ) ---
+            // --- AKILLI EK MOTORU ---
             function getSuffix(name, type) {
                 if(!name) return "";
                 const vowels = "aıoueiöü";
